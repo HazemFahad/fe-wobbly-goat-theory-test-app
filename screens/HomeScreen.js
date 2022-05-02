@@ -7,12 +7,9 @@ import {
 } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { useContext } from "react";
-import { UserContext } from "../contexts/user";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
-  const { user } = useContext(UserContext);
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">

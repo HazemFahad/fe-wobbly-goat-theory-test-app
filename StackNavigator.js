@@ -5,6 +5,7 @@ import TestScreen from "./screens/TestScreen";
 import LoginScreen from "./screens/LoginScreen";
 import { useContext } from "react";
 import { UserContext } from "./contexts/user";
+import ExampleQuestion from "./screens/ExampleQuestion";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,7 @@ const StackNavigator = () => {
         <>
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Test" component={TestScreen} />
+          <Stack.Screen name="ExampleQuestion" component={ExampleQuestion} />
         </>
       ) : (
         <Stack.Screen name="Login" component={LoginScreen} />
