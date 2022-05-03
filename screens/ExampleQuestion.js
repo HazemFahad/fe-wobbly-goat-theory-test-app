@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { getQuestionByID } from "../utils/api";
 import { useNavigation } from "@react-navigation/native";
 
-const ExampleQuestion = () => {
+const ExampleQuestion = (props) => {
   const [question, setQuestion] = useState({});
   const [answer, setAnswer] = useState("");
   const navigation = useNavigation();
@@ -28,6 +28,8 @@ const ExampleQuestion = () => {
   }, []);
 
   const answers = question.answers;
+
+  console.log(props);
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">

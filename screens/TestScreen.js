@@ -18,6 +18,11 @@ const TestScreen = () => {
       />
       <Button
         style={styles.input}
+        title="TestSelector"
+        onPress={() => navigation.navigate("TestSelector")}
+      />
+      <Button
+        style={styles.input}
         title="Log Out"
         onPress={() => {
           setUser(null);
