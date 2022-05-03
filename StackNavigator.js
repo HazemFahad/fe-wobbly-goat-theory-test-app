@@ -14,15 +14,10 @@ const StackNavigator = () => {
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {user ? (
-        <>
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Test" component={TestScreen} />
-          <Stack.Screen name="ExampleQuestion" component={ExampleQuestion} />
-        </>
-      ) : (
-        <Stack.Screen name="Login" component={LoginScreen} />
-      )}
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Test" component={TestScreen} />
+      <Stack.Screen name="ExampleQuestion" component={ExampleQuestion} />
+      {user ? <></> : <Stack.Screen name="Login" component={LoginScreen} />}
     </Stack.Navigator>
   );
 };
