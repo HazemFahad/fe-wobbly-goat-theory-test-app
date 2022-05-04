@@ -10,6 +10,12 @@ export const getQuestionByID = (id) => {
   });
 };
 
+export const getUserByID = (id) => {
+  return theoryTestApi.get(`/users/${id}`).then(({ data }) => {
+    return data;
+  });
+};
+
 export const getNewTest = (email, password, type_id, categories) => {
   return theoryTestApi
     .post("/test/create", {

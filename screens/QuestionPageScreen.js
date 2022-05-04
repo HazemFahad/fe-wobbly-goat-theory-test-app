@@ -26,11 +26,11 @@ const QuestionPage = (props) => {
     password: "toptal123",
   };
 
+  console.log(props.route.params.fullTest.data);
+
   const testData = props.route.params.fullTest.data
     ? props.route.params.fullTest.data
     : props.route.params.quiz.data;
-
-  console.log(testData[count].test_id);
 
   const onPress = () => {
     if (answer !== "") {
@@ -51,6 +51,10 @@ const QuestionPage = (props) => {
       alert("You have to choose an option");
     }
   };
+
+  //conditional logic 2 x return blocks - one for image 1 without
+
+  //3 end because they type question where u have to pick image
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
