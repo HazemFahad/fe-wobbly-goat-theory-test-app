@@ -15,7 +15,17 @@ const ExampleQuestion = (props) => {
   const [answer, setAnswer] = useState("");
   const navigation = useNavigation();
 
-  let question_id = Math.floor(Math.random() * 500);
+  const testData = props.route.params.quiz.data;
+
+  let count = 0;
+
+  const singleQuestion = testData[count];
+
+  const singleAnswer = testData[count].answers;
+
+  console.log(testData[0]);
+
+  let question_id = testData[0];
 
   useEffect(() => {
     getQuestionByID(question_id)
@@ -25,15 +35,11 @@ const ExampleQuestion = (props) => {
       .catch((err) => {
         setErr("Comments not found!");
       });
-  }, []);
-
-  const answers = question.answers;
-
-  console.log(props);
+  }, [count]);
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <Text style={styles.input}>{question.question}</Text>
+      <Text style={styles.input}>{testData[0].question}</Text>
       <View style={styles.answerContainer}>
         {answers ? (
           answers.map(({ answer, answer_id }) => {

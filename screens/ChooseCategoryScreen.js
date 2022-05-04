@@ -85,7 +85,7 @@ const PracticeSelector = () => {
       <Button
         style={styles.input}
         title="Random Test 10 q"
-        onPress={() => navigation.navigate("", { quiz })}
+        onPress={() => navigation.navigate("QuestionPage", { quiz })}
       />
     </KeyboardAvoidingView>
   );

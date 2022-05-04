@@ -9,6 +9,7 @@ import ExampleQuestion from "./screens/ExampleQuestion";
 import TestSelector from "./screens/TestOrQuizScreen";
 import PracticeSelector from "./screens/ChooseCategoryScreen";
 import PrePracticeSelector from "./screens/StartCategoryQuizScreen";
+import QuestionPage from "./screens/QuestionPageScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,10 +23,12 @@ const StackNavigator = () => {
       <Stack.Screen name="ExampleQuestion" component={ExampleQuestion} />
       <Stack.Screen name="TestSelector" component={TestSelector} />
       <Stack.Screen name="PracticeSelector" component={PracticeSelector} />
+
       <Stack.Screen
         name="PrePracticeSelector"
         component={PrePracticeSelector}
       />
+      <Stack.Screen name="QuestionPage" component={QuestionPage} />
 
       {user ? <></> : <Stack.Screen name="Login" component={LoginScreen} />}
     </Stack.Navigator>

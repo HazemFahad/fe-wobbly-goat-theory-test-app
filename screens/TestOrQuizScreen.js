@@ -23,8 +23,6 @@ const TestSelector = () => {
       });
   }, []);
 
-  console.log(fullTest);
-
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       {fullTest.length === 0 ? (
@@ -41,7 +39,7 @@ const TestSelector = () => {
           <Button
             style={styles.input}
             title="Full Theory test"
-            onPress={() => navigation.navigate("ExampleQuestion", { cheese })}
+            onPress={() => navigation.navigate("QuestionPage", { fullTest })}
           />
         </>
       )}

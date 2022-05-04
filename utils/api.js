@@ -28,3 +28,15 @@ export const getCategories = () => {
     return data;
   });
 };
+
+export const sendAnswer = (quizId, email, password, user_answer_number) => {
+  return theoryTestApi
+    .post(`/test/update/${quizId}`, {
+      email: email,
+      password: password,
+      user_answer_number: user_answer_number,
+    })
+    .then(({ data }) => {
+      return data;
+    });
+};

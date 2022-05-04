@@ -39,7 +39,7 @@ const PrePracticeSelector = (props) => {
       <Button
         style={styles.input}
         title="Start Practice Test"
-        onPress={() => navigation.navigate("", { quiz })}
+        onPress={() => navigation.navigate("QuestionPage", { quiz })}
       />
     </KeyboardAvoidingView>
   );
