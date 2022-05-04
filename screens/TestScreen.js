@@ -1,6 +1,5 @@
+import React,{ useContext }  from "react";
 import { Button, Text, StyleSheet, KeyboardAvoidingView } from "react-native";
-import React from "react";
-import { useContext } from "react";
 import { UserContext } from "../contexts/user";
 import { useNavigation } from "@react-navigation/native";
 
@@ -14,7 +13,7 @@ const TestScreen = () => {
       <Button
         style={styles.input}
         title="Example Question"
-        onPress={() => navigation.navigate("ExampleQuestion")}
+        onPress={() => navigation.navigate("Question")}
       />
       <Button
         style={styles.input}
