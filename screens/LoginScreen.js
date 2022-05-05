@@ -36,6 +36,7 @@ const LoginScreen = () => {
       );
       if (success) {
         try {
+          data.password = password;
           await AsyncStorage.setItem("userAuth", JSON.stringify(data));
           setUser(data);
         } catch (error) {}
