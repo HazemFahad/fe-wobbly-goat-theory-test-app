@@ -9,7 +9,7 @@ export const getQuestionByID = (id) => {
   return theoryTestApi.get(`/question/${id}`).then(({ data }) => {
     return data;
   });
-};  
+};
 
 export const getNewTest = (email, password, type_id, categories) => {
   return theoryTestApi
@@ -36,6 +36,17 @@ export const sendAnswer = (quizId, email, password, user_answer_number) => {
       email: email,
       password: password,
       user_answer_number: user_answer_number,
+    })
+    .then(({ data }) => {
+      return data;
+    });
+};
+
+export const getTestsByUser = (email, password) => {
+  return theoryTestApi
+    .post(`/tests`, {
+      email: email,
+      password: password,
     })
     .then(({ data }) => {
       return data;
