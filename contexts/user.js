@@ -1,10 +1,10 @@
 import { createContext } from "react";
-import { useState } from "react";
-
+import useUser from "../hooks/useUser";
+ 
 export const UserContext = createContext();
 
 export const UserProvider = (props) => {
-  const [user, setUser] = useState(null);
+  const {user,setUser} = useUser();
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

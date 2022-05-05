@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeScreen from "./screens/HomeScreen";
 import TestScreen from "./screens/TestScreen";
 import LoginScreen from "./screens/LoginScreen";
-import { useContext } from "react";
+import RegisterScreen from "./screens/RegisterScreen";
+import LoadingScreen from "./screens/LoadingScreen";
+import ForgetPasswordScreen from "./screens/ForgetPasswordScreen";
+import QuestionScreen from "./screens/QuestionScreen";
+import ResultScreen from "./screens/ResultScreen";
+import ChangePasswordScreen from "./screens/ChangePasswordScreen";
+import TestsHistoryScreen from "./screens/TestsHistoryScreen";
+import DrawerNavigator from "./components/DrawerNavigator";
 import { UserContext } from "./contexts/user";
-import ExampleQuestion from "./screens/ExampleQuestion";
 
 const Stack = createNativeStackNavigator();
 
@@ -13,11 +18,35 @@ const StackNavigator = () => {
   const { user } = useContext(UserContext);
 
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Test" component={TestScreen} />
-      <Stack.Screen name="ExampleQuestion" component={ExampleQuestion} />
-      {user ? <></> : <Stack.Screen name="Login" component={LoginScreen} />}
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      {user ? (
+        <>
+          <Stack.Screen name="Main" component={DrawerNavigator} />
+          <Stack.Screen name="Test" component={TestScreen} />
+          <Stack.Screen name="Question" component={QuestionScreen} />
+          <Stack.Screen name="Result" component={ResultScreen} />
+
+          <Stack.Screen name="TestsHistory" component={TestsHistoryScreen} />
+          <Stack.Screen
+            name="ChangePassword"
+            component={ChangePasswordScreen}
+          />
+        </>
+      ) : (
+        <>
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen
+            name="ForgetPassword"
+            component={ForgetPasswordScreen}
+          />
+        </>
+      )}
+      <Stack.Screen name="Loading" component={LoadingScreen} />
     </Stack.Navigator>
   );
 };

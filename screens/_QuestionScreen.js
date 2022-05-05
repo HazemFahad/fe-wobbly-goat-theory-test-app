@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import {
   Button,
   Text,
@@ -6,11 +8,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-import { getQuestionByID } from "../utils/api";
-import { useNavigation } from "@react-navigation/native";
 
-const ExampleQuestion = () => {
+import { getQuestionByID } from "../utils/api";
+
+
+const QuestionScreen = () => {
   const [question, setQuestion] = useState({});
   const [answer, setAnswer] = useState("");
   const navigation = useNavigation();
@@ -23,7 +25,7 @@ const ExampleQuestion = () => {
         setQuestion(data);
       })
       .catch((err) => {
-        setErr("Comments not found!");
+        //setErr("Comments not found!");
       });
   }, []);
 
@@ -79,4 +81,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ExampleQuestion;
+export default QuestionScreen;
