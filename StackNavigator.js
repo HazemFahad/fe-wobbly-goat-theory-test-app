@@ -1,16 +1,21 @@
 import React, { useContext } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import TestScreen from "./screens/TestScreen";
+import TestScreen from "./screens/TestScreen";//TestOrQuizScreen TestSelector
 import LoginScreen from "./screens/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import LoadingScreen from "./screens/LoadingScreen";
 import ForgetPasswordScreen from "./screens/ForgetPasswordScreen";
-import QuestionScreen from "./screens/QuestionScreen";
+//import QuestionScreen from "./screens/QuestionScreen";
 import ResultScreen from "./screens/ResultScreen";
 import ChangePasswordScreen from "./screens/ChangePasswordScreen";
 import TestsHistoryScreen from "./screens/TestsHistoryScreen";
 import DrawerNavigator from "./components/DrawerNavigator";
 import { UserContext } from "./contexts/user";
+
+import ExampleQuestion from "./screens/ExampleQuestion";
+import PracticeSelector from "./screens/ChooseCategoryScreen";
+import PrePracticeSelector from "./screens/StartCategoryQuizScreen";
+import QuestionPage from "./screens/QuestionPageScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,8 +31,11 @@ const StackNavigator = () => {
       {user ? (
         <>
           <Stack.Screen name="Main" component={DrawerNavigator} />
+          {/*
           <Stack.Screen name="Test" component={TestScreen} />
           <Stack.Screen name="Question" component={QuestionScreen} />
+          */}
+
           <Stack.Screen name="Result" component={ResultScreen} />
 
           <Stack.Screen name="TestsHistory" component={TestsHistoryScreen} />
@@ -35,6 +43,16 @@ const StackNavigator = () => {
             name="ChangePassword"
             component={ChangePasswordScreen}
           />
+                <Stack.Screen name="ExampleQuestion" component={ExampleQuestion} />
+      <Stack.Screen name="Test" component={TestScreen} />
+      <Stack.Screen name="PracticeSelector" component={PracticeSelector} />
+      <Stack.Screen
+        name="PrePracticeSelector"
+        component={PrePracticeSelector}
+      />
+      <Stack.Screen name="QuestionPage" component={QuestionPage} />
+
+
         </>
       ) : (
         <>

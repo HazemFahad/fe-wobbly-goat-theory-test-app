@@ -7,6 +7,7 @@ import {
   View,
   Image,
 } from "react-native";
+import {RadioButton ,} from "react-native-rapi-ui";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { sendAnswer } from "../utils/api";
@@ -15,13 +16,14 @@ import { UserContext } from "../contexts/user";
 
 const QuestionScreen = (props) => {
   const { user } = useContext(UserContext);
-  const [answer, setAnswer] = useState("");
   const [count, setCount] = useState(0);
-  const [quiz, setQuiz] = useState({});
+  const [quiz, setQuiz] = useState(props.route.params.questions.data[0]);
   const navigation = useNavigation();
   const { email, password } = {user};
 
   const questions = props.route.params.questions;
+  //console.log(JSON.stringify(props.route.params.questions.data[0]),"props");
+  console.log(JSON.stringify(quiz),"props");
   //console.log(quiz);
   console.log('5');
 
@@ -46,8 +48,9 @@ const QuestionScreen = (props) => {
   };
   useEffect(async () => {
     console.log("QuestionScreen mount.");
-    setQuiz(props.route.params.questions);
-    console.log(quiz);
+    
+    //setQuiz(props.route.params.questions.data[0]);
+    //console.log(quiz);
     return () => {
       console.log("QuestionScreen unmount.");
     };
@@ -58,7 +61,7 @@ const QuestionScreen = (props) => {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      {/*
+      {quiz.question?<>
       {quiz?.media?
       <Image
         style={styles.questionImage}
@@ -66,21 +69,20 @@ const QuestionScreen = (props) => {
           uri: `../assets/images/${quiz?.media}`
         }}
       />:""}
-      <Text>{quiz?.question}jj</Text>
+      <Text>{quiz?.question}</Text>
       <View style={styles.answerContainer}>
         {quiz?.answers ? (
           quiz?.answers.map(({ answer, answer_id }) => {
             return (
-              <View key={answer_id}>
-                <TouchableOpacity
-                  style={styles.answer}
-                  onPress={() => {
-                    setAnswer(answer_id);
-                  }}
-                >
-                  <Text>{answer}</Text>
-                </TouchableOpacity>
-              </View>
+
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}  key={answer_id}>
+            
+            <RadioButton value={answer_id} onValueChange={(val) => setAnswer(val)} />
+            <Text size="md" style={{ marginLeft: 10, color: 'gray' }}>
+            {answer}
+            </Text>
+        </View>
+
             );
           })
         ) : (
@@ -94,7 +96,9 @@ const QuestionScreen = (props) => {
       </View>
 
       <Button title="Next Question" onPress={onPress} />
-      */}
+      </>:(
+          <Text>LOADING...</Text>
+        )}
     </KeyboardAvoidingView>
   );
 };

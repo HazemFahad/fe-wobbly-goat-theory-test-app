@@ -11,8 +11,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { Icon } from "react-native-elements";
 import ActionBarImage from "./ActionBarImage";
-import QuestionScreen from "../screens/QuestionScreen";
-import TestScreen from "../screens/TestScreen";
+import TestScreen from "../screens/TestScreen";//TestOrQuizScreen // TestSelecor
 import HomeScreen from "../screens/HomeScreen";
 import { UserContext } from "../contexts/user";
 import TestsHistoryScreen from "../screens/TestsHistoryScreen";

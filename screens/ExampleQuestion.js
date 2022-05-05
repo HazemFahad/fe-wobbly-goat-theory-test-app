@@ -1,5 +1,3 @@
-import React, { useEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
 import {
   Button,
   Text,
@@ -8,16 +6,26 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-
+import React, { useEffect, useState } from "react";
 import { getQuestionByID } from "../utils/api";
+import { useNavigation } from "@react-navigation/native";
 
-
-const QuestionScreen = () => {
+const ExampleQuestion = (props) => {
   const [question, setQuestion] = useState({});
   const [answer, setAnswer] = useState("");
   const navigation = useNavigation();
 
-  let question_id = Math.floor(Math.random() * 500);
+  const testData = props.route.params.quiz.data;
+
+  let count = 0;
+
+  const singleQuestion = testData[count];
+
+  const singleAnswer = testData[count].answers;
+
+  console.log(testData[0]);
+
+  let question_id = testData[0];
 
   useEffect(() => {
     getQuestionByID(question_id)
@@ -25,15 +33,13 @@ const QuestionScreen = () => {
         setQuestion(data);
       })
       .catch((err) => {
-        //setErr("Comments not found!");
+        setErr("Comments not found!");
       });
-  }, []);
-
-  const answers = question.answers;
+  }, [count]);
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <Text style={styles.input}>{question.question}</Text>
+      <Text style={styles.input}>{testData[0].question}</Text>
       <View style={styles.answerContainer}>
         {answers ? (
           answers.map(({ answer, answer_id }) => {
@@ -81,4 +87,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default QuestionScreen;
+export default ExampleQuestion;
