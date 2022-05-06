@@ -1,6 +1,7 @@
-import React, { useContext, useCallback } from "react";
+import React, { useContext, useCallback, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LineChart } from "react-native-chart-kit";
+import { getTestsByUser } from "../utils/api";
 import {
   View,
   StyleSheet,
@@ -24,7 +25,38 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   const { isDarkmode } = useTheme();
   const { user, setUser } = useContext(UserContext);
-  const screenWidth = Dimensions.get("window").width - 50;
+  const [usersTests, setUsersTests] = useState([]);
+  const [last8, setLast8] = useState([
+    { result: 1 },
+    { result: 1 },
+    { result: 0 },
+    { result: 1 },
+    { result: 1 },
+    { result: 0 },
+    { result: 1 },
+    { result: 0 },
+  ]);
+  const screenWidth = Dimensions.get("window").width;
+
+  useEffect(() => {
+    getTestsByUser(user.email, user.password)
+      .then((data) => {
+        setUsersTests(data);
+        setLast8(data.data.slice(-8));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [setLast8]);
+  const handleSignOut = async () => {
+    try {
+      await AsyncStorage.clear();
+      setUser(null);
+    } catch (error) {}
+  };
+
+  // const last8 = usersTests.slice(-8);
+  console.log(last8);
   const data = {
     labels: [
       "02/04",
@@ -39,20 +71,22 @@ const HomeScreen = () => {
     ],
     datasets: [
       {
-        data: [20, 26, 32, 30, 39, 45, 40, 42, 49],
+        data: [
+          last8[0].result,
+          last8[1].result,
+          last8[2].result,
+          last8[3].result,
+          last8[4].result,
+          last8[5].result,
+          last8[6].result,
+          last8[7].result,
+        ],
         color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
         strokeWidth: 2, // optional
       },
     ],
     legend: ["Test Progress"], // optional
   };
-
-  const handleSignOut = async () => {
-    try {
-      await AsyncStorage.clear();
-      setUser(null);
-    } catch (error) {}
-  }
 
   return (
     <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1 }}>
@@ -65,17 +99,16 @@ const HomeScreen = () => {
           <View
             style={{
               flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
+              // justifyContent: "center",
+              // alignItems: "center",
               backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,
             }}
           >
             <Section>
               <SectionContent>
                 <Text fontWeight="bold" style={{ textAlign: "center" }}>
-                  These UI components provided by Rapi UI
+                  Welcome {user.name}
                 </Text>
-                <Text>Welcome ...user</Text>
                 <Text>Past test results</Text>
                 <Text>Practice</Text>
                 <Text>Passed...</Text>
@@ -115,6 +148,8 @@ const HomeScreen = () => {
                     marginVertical: 8,
                     alignItems: "center",
                     alignContent: "center",
+                    marginRight: 0,
+                    padding: 0,
                   }}
                 />
 
