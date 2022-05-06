@@ -4,12 +4,12 @@ import {
   Dimensions,
   ScrollView,
   KeyboardAvoidingView,
+  ActivityIndicator,
   Button,
 } from "react-native";
 import {
   Picker,
   Layout,
-  // Button,
   Text,
   Section,
   SectionContent,
@@ -28,7 +28,7 @@ const ChooseCategoryScreen = () => {
   const navigation = useNavigation();
   const [categories, setCategories] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
-  const [quiz, setQuiz] = useState([]);
+  const [loading, setLoading] = useState(false);
   const { isDarkmode } = useTheme();
 
   const { email, password } = user;
@@ -47,27 +47,29 @@ const ChooseCategoryScreen = () => {
       });
   }, []);
 
-  useEffect(() => {
-    getNewTest(email, password, 1, [])
-      .then((data) => {
-        setQuiz(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
   const handlePressPracticeCat = () => {
+    setLoading(true);
     getNewTest(email, password, 1, selectedItems).then((data) => {
+      setLoading(false);
       navigation.navigate("Question", { data });
     });
   };
 
-  const handlePressPracticeNoCat = () => {
-    getNewTest(email, password, 1, []).then((data) => {
-      navigation.navigate("Question", { data });
-    });
-  };
+  if (loading) {
+    return (
+      <Layout>
+        <View
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <ActivityIndicator size="large" color={themeColor.primary} />
+        </View>
+      </Layout>
+    );
+  }
 
   return (
     <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1 }}>
@@ -86,11 +88,11 @@ const ChooseCategoryScreen = () => {
             }}
           >
             <Section>
+              <Text fontWeight="bold" style={{ textAlign: "center" }}>
+                Please choose the categories, or select nothing to get question
+                from all categories.
+              </Text>
               <SectionContent>
-                <Text fontWeight="bold" style={{ textAlign: "center" }}>
-                  Please choose the categories, or select nothing to get
-                  question from all categories.
-                </Text>
                 <View style={styles.selector}>
                   <MultiSelect
                     hideTags
@@ -116,13 +118,8 @@ const ChooseCategoryScreen = () => {
 
                 <Button
                   style={styles.input}
-                  title="New Practice Test Category from dropdown"
+                  title="Quiz by category"
                   onPress={handlePressPracticeCat}
-                />
-                <Button
-                  style={styles.input}
-                  title="Random Test 10 q"
-                  onPress={handlePressPracticeNoCat}
                 />
               </SectionContent>
             </Section>
