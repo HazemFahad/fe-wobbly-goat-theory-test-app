@@ -7,7 +7,6 @@ const theoryTestApi = axios.create({
 
 const auth = {};
 
-
 auth.signInWithEmailAndPassword = (email, password) => {
   return theoryTestApi
     .post(`/user/signin`, {
@@ -15,7 +14,7 @@ auth.signInWithEmailAndPassword = (email, password) => {
       password: password,
     })
     .then(({ data }) => {
-        return data;
+      return data;
     })
     .catch((err) => {
       console.log(err, "<==========");
@@ -50,16 +49,17 @@ auth.sendPasswordResetEmail = (email) => {
     });
 };
 
-auth.getAuth = () => {
-  let user = {
-    user_id: auth.user_id,
-    name: auth.name,
-    email: auth.email,
-    password: auth.password,
-    isLogged: auth.isLogged,
-  };
-  return user;
+auth.changePassword = (email,password,password_new,password_confirmation) => {
+  return theoryTestApi
+    .post(`/user/password/change`, {
+      email: email,
+      password: password,
+      password_new:password_new,
+      password_confirmation: password_confirmation,
+    })
+    .then(({ data }) => {
+      return data;
+    });
 };
-
 
 module.exports = auth;

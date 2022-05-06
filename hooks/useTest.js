@@ -1,23 +1,22 @@
 import { useState, useEffect } from "react";
+import { getTestById } from "../utils/api";
 
-const useTest = (test_id) => {
-  const [quiz, setQuiz] = useState();
+const useTest = (email, password, test_id) => {
+  const [test, setTest] = useState();
+  const [loading, setLoading] = useState(false);
 
-  useEffect(async() => {
+  useEffect(async () => {
     try {
-      const loggedInUser = await AsyncStorage.getItem("userAuth");
-      console.log(loggedInUser,'user local data');
-      if (loggedInUser !==null) {
-        const foundUser = JSON.parse(loggedInUser);
-        setUser(foundUser);
-      }
-    } catch (error) {}
-    return () => {
-      console.log("Anything in here is fired on component unmount.");
-    };
-  }, []);
+      setLoading(true);
+      const testData = await getTestById(email, password, test_id);
+      setLoading(false);
+      setTest(testData);
+    } catch (error) {
+      setLoading(false);
+    }
+  }, [email, password, test_id]);
 
-  return { quiz, setQuiz };
+  return { test, setTest, loading };
 };
 
 export default useTest;
