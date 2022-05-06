@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
@@ -25,6 +25,8 @@ const ForgetPasswordScreen = () => {
   const [passwordNew, setPasswordNew] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [loading, setLoading] = useState(false);
+  const { isDarkmode } = useTheme();
+
   const { email, password } = { user };
 
   const handleChange = async () => {
@@ -41,7 +43,7 @@ const ForgetPasswordScreen = () => {
         userData.password = passwordNew;
         await AsyncStorage.setItem("userAuth", JSON.stringify(userData));
         setUser(userData);
-        setLoading(false);
+
         alert("Your password has been changed successfully! ");
       } else {
         let mssg = "";
@@ -50,6 +52,7 @@ const ForgetPasswordScreen = () => {
         }
         alert(mssg);
       }
+      setLoading(false);
     } catch (error) {
       //let errorCode = error.code;
       let errorMessage = error.message;
@@ -125,7 +128,7 @@ const ForgetPasswordScreen = () => {
             />
             <Button
               text={loading ? "Loading" : "Continue"}
-              onPress={handleLogin}
+              onPress={handleChange}
               style={{
                 marginTop: 20,
               }}
