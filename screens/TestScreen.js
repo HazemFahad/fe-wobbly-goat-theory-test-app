@@ -9,40 +9,29 @@ import { UserContext } from "../contexts/user";
 const TestScreen = () => {
   const { user } = useContext(UserContext);
   const navigation = useNavigation();
-  const [fullTest, setFullTest] = useState([]);
 
   const { email, password } = user;
 
-  useEffect(() => {
-    getNewTest(email, password, 2, [])
-      .then((data) => {
-        setFullTest(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [email,password]);
+  const handlePressFullTest = () => {
+    getNewTest(email, password, 2, []).then((data) => {
+      navigation.navigate("Question", { data });
+    });
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      {fullTest.length === 0 ? (
-        <Text>Loading...</Text>
-      ) : (
-        <>
-          <Text>TestSelectorScreen</Text>
+      {/* <Text>TestSelectorScreen</Text> */}
 
-          <Button
-            style={styles.input}
-            title="New Practice Quiz"
-            onPress={() => navigation.navigate("PracticeSelector")}
-          />
-          <Button
-            style={styles.input}
-            title="Full Theory test"
-            onPress={() => navigation.navigate("QuestionPage", { fullTest })}
-          />
-        </>
-      )}
+      <Button
+        style={styles.input}
+        title="New Practice Quiz"
+        onPress={() => navigation.navigate("PracticeSelector")}
+      />
+      <Button
+        style={styles.input}
+        title="Full Theory test"
+        onPress={handlePressFullTest}
+      />
     </KeyboardAvoidingView>
   );
 };
