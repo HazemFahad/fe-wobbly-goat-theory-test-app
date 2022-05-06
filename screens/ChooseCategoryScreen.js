@@ -4,10 +4,12 @@ import {
   Dimensions,
   ScrollView,
   KeyboardAvoidingView,
-} from "react-native";
-import {Picker,
-  Layout,
   Button,
+} from "react-native";
+import {
+  Picker,
+  Layout,
+  // Button,
   Text,
   Section,
   SectionContent,
@@ -30,7 +32,6 @@ const ChooseCategoryScreen = () => {
   const { isDarkmode } = useTheme();
 
   const { email, password } = user;
-
 
   const onSelectedItemsChange = (selectedItems) => {
     setSelectedItems(selectedItems);
@@ -56,65 +57,74 @@ const ChooseCategoryScreen = () => {
       });
   }, []);
 
-  // console.log(selectedItems);
+  const handlePressPracticeCat = () => {
+    getNewTest(email, password, 1, selectedItems).then((data) => {
+      navigation.navigate("Question", { data });
+    });
+  };
+
+  const handlePressPracticeNoCat = () => {
+    getNewTest(email, password, 1, []).then((data) => {
+      navigation.navigate("Question", { data });
+    });
+  };
 
   return (
     <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1 }}>
-    <Layout>
-      <ScrollView
-        contentContainerStyle={{
-          flexGrow: 1,
-        }}
-      >
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,
+      <Layout>
+        <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
           }}
         >
-          <Section>
-            <SectionContent>
-              <Text fontWeight="bold" style={{ textAlign: "center" }}>
-                Please choose the categories, or select nothing to get question from all categories.
-              </Text>
-      <View style={styles.selector}>
-        <MultiSelect
-          hideTags
-          items={categories}
-          uniqueKey="category_id"
-          onSelectedItemsChange={onSelectedItemsChange}
-          selectedItems={selectedItems}
-          selectText="Pick Items"
-          searchInputPlaceholderText="Search Items..."
-          onChangeInput={(text) => console.log(text)}
-          tagRemoveIconColor="#CCC"
-          tagBorderColor="#CCC"
-          tagTextColor="#CCC"
-          selectedItemTextColor="#CCC"
-          selectedItemIconColor="#CCC"
-          itemTextColor="#000"
-          displayKey="category_name"
-          searchInputStyle={{ color: "#CCC" }}
-          submitButtonColor="#CCC"
-          submitButtonText="Submit"
-        />
-      </View>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,
+            }}
+          >
+            <Section>
+              <SectionContent>
+                <Text fontWeight="bold" style={{ textAlign: "center" }}>
+                  Please choose the categories, or select nothing to get
+                  question from all categories.
+                </Text>
+                <View style={styles.selector}>
+                  <MultiSelect
+                    hideTags
+                    items={categories}
+                    uniqueKey="category_id"
+                    onSelectedItemsChange={onSelectedItemsChange}
+                    selectedItems={selectedItems}
+                    selectText="Pick Items"
+                    searchInputPlaceholderText="Search Items..."
+                    onChangeInput={(text) => console.log(text)}
+                    tagRemoveIconColor="#CCC"
+                    tagBorderColor="#CCC"
+                    tagTextColor="#CCC"
+                    selectedItemTextColor="#CCC"
+                    selectedItemIconColor="#CCC"
+                    itemTextColor="#000"
+                    displayKey="category_name"
+                    searchInputStyle={{ color: "#CCC" }}
+                    submitButtonColor="#CCC"
+                    submitButtonText="Submit"
+                  />
+                </View>
 
-      <Button
-        style={styles.input}
-        title="New Practice Test Category from dropdown"
-        onPress={() =>
-          navigation.navigate("PrePracticeSelector", { categories:selectedItems, })
-        }
-      />
-      <Button
-        style={styles.input}
-        title="Random Test 10 q"
-        onPress={() => navigation.navigate("QuestionPage", { quiz })}
-      />
-                  </SectionContent>
+                <Button
+                  style={styles.input}
+                  title="New Practice Test Category from dropdown"
+                  onPress={handlePressPracticeCat}
+                />
+                <Button
+                  style={styles.input}
+                  title="Random Test 10 q"
+                  onPress={handlePressPracticeNoCat}
+                />
+              </SectionContent>
             </Section>
           </View>
         </ScrollView>
