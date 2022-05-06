@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
@@ -43,7 +43,7 @@ const ForgetPasswordScreen = () => {
         userData.password = passwordNew;
         await AsyncStorage.setItem("userAuth", JSON.stringify(userData));
         setUser(userData);
-        
+
         alert("Your password has been changed successfully! ");
       } else {
         let mssg = "";
