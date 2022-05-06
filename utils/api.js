@@ -30,9 +30,14 @@ export const getCategories = () => {
   });
 };
 
-export const sendAnswer = (quizId, email, password, user_answer_number) => {
+export const sendAnswer = (
+  test_question_id,
+  email,
+  password,
+  user_answer_number
+) => {
   return theoryTestApi
-    .post(`/test/update/${quizId}`, {
+    .post(`/test/update/${test_question_id}`, {
       email: email,
       password: password,
       user_answer_number: user_answer_number,
@@ -45,6 +50,17 @@ export const sendAnswer = (quizId, email, password, user_answer_number) => {
 export const getTestsByUser = (email, password) => {
   return theoryTestApi
     .post(`/tests`, {
+      email: email,
+      password: password,
+    })
+    .then(({ data }) => {
+      return data;
+    });
+};
+
+export const getResults = (email, password, test_id) => {
+  return theoryTestApi
+    .post(`/test/get/${test_id}`, {
       email: email,
       password: password,
     })

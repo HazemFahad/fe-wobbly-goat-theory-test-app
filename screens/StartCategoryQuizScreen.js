@@ -31,7 +31,7 @@ const PrePracticeSelector = (props) => {
       });
   }, []);
 
-  console.log(categoryArr);
+  // console.log(categoryArr);
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">

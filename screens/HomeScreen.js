@@ -42,7 +42,7 @@ const HomeScreen = () => {
     getTestsByUser(user.email, user.password)
       .then((data) => {
         setUsersTests(data);
-        setLast8(data.data.slice(-8));
+        // setLast8(data.data.slice(-8));
       })
       .catch((err) => {
         console.log(err);
@@ -56,7 +56,7 @@ const HomeScreen = () => {
   };
 
   // const last8 = usersTests.slice(-8);
-  console.log(last8);
+  // console.log(last8);
   const data = {
     labels: [
       "02/04",
