@@ -15,6 +15,7 @@ import TestScreen from "../screens/TestScreen";//TestOrQuizScreen // TestSelecor
 import HomeScreen from "../screens/HomeScreen";
 import { UserContext } from "../contexts/user";
 import TestsHistoryScreen from "../screens/TestsHistoryScreen";
+import FindCentersScreen from "../screens/FindCentersScreen";
 import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 
 const Drawer = createDrawerNavigator();
@@ -126,6 +127,21 @@ const DrawerNavigator = () => {
         component={TestsHistoryScreen}
         options={{
           title: "📜 Test History",
+          headerStyle: {
+            backgroundColor: "#d8d8d8",
+          },
+          headerTintColor: "black",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+          headerRight: () => <ActionBarImage />,
+        }}
+      />
+            <Drawer.Screen
+        name="find"
+        component={FindCentersScreen}
+        options={{
+          title: "🔍 Find center",
           headerStyle: {
             backgroundColor: "#d8d8d8",
           },

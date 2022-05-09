@@ -9,6 +9,7 @@ import QuestionScreen from "./screens/QuestionScreen";
 import ResultScreen from "./screens/ResultScreen";
 import ChangePasswordScreen from "./screens/ChangePasswordScreen";
 import TestsHistoryScreen from "./screens/TestsHistoryScreen";
+import FindCentersScreen from "./screens/FindCentersScreen";
 import DrawerNavigator from "./components/DrawerNavigator";
 import { UserContext } from "./contexts/user";
 
@@ -47,6 +48,9 @@ const StackNavigator = () => {
           <Stack.Screen
             name="PrePracticeSelector"
             component={PrePracticeSelector}
+          /><Stack.Screen
+            name="find"
+            component={FindCentersScreen}
           />
           {/* <Stack.Screen name="QuestionPage" component={QuestionPage} /> */}
         </>

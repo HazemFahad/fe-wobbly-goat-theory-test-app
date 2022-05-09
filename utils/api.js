@@ -68,3 +68,13 @@ export const getResults = (email, password, test_id) => {
       return data;
     });
 };
+
+export const getCenters = (postcode) => {
+  return theoryTestApi
+    .post(`/centers`, {
+      postcode: postcode,
+    })
+    .then(({ data }) => {
+      return data;
+    });
+};
