@@ -48,11 +48,9 @@ const StackNavigator = () => {
           <Stack.Screen
             name="PrePracticeSelector"
             component={PrePracticeSelector}
-          /><Stack.Screen
-            name="find"
-            component={FindCentersScreen}
           />
-          {/* <Stack.Screen name="QuestionPage" component={QuestionPage} /> */}
+          <Stack.Screen name="find" component={FindCentersScreen} />
+          {/* <Stack.Screen name="QueestionPage" component={QuestionPage} /> */}
         </>
       ) : (
         <>
