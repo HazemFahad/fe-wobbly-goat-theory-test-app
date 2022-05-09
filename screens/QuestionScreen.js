@@ -19,46 +19,51 @@ import { CountDown } from "react-native-countdown-component";
 const QuestionScreen = (props) => {
   const { user } = useContext(UserContext);
   const [answer, setAnswer] = useState("");
+  const [totalResult, setTotalResult] = useState(0);
 
   const [count, setCount] = useState(0);
   const navigation = useNavigation();
   const { email, password } = user;
 
   const testData = props.route.params.data.data;
+  let testId = testData[0].test_id;
 
   const handleFinish = () => {
     Alert.alert("Your time has ran out");
-    getResults(email, password, testData.test_id).then((data) => {
+    getResults(email, password, testData[count].test_id).then((data) => {
       // console.log(data);
       navigation.navigate("Result", { data });
     });
   };
 
-  const onPress = () => {
+  const handlePress = () => {
+    console.log(count);
     if (answer !== "") {
       if (count < testData.length - 1) {
         setCount(count + 1);
       } else {
         getResults(email, password, testData[count].test_id).then((data) => {
-          console.log(
-            data.data.map((q) => {
-              return [q.is_correct, q.correct_answer, q.user_answer_number];
-            })
-          );
-          console.log(testData[count].test_id);
-          navigation.navigate("Result", { data });
+          // console.log(
+          //   data.data.map((q) => {
+          //     return [q.is_correct, q.correct_answer, q.user_answer_number];
+          //   })
+          // );
+          // console.log(testData[count].test_id);
+          navigation.navigate("Result", { email, password, testId });
         });
       }
-      console.log(answer === testData[count].correct_answer);
-      console.log(answer, " <--- answer");
-      console.log(testData[count].correct_answer, " <--- correct answer");
-
       sendAnswer(
         testData[count].test_questions_id,
         email,
         password,
         answer
-      ).then((data) => {});
+      ).then((data) => {
+        console.log(data.data, "datatime");
+        if (data.data === 1) {
+          setTotalResult(totalResult + 1);
+          console.log(totalResult, "resultytime");
+        }
+      });
       setAnswer("");
     } else {
       alert("You have to choose an option");
@@ -72,9 +77,7 @@ const QuestionScreen = (props) => {
           <CountDown
             size={30}
             until={3420}
-            onFinish={() => {
-              handleFinish();
-            }}
+            onFinish={handleFinish}
             showSeparator
             timeToShow={["M", "S"]}
             digitStyle={{
@@ -132,8 +135,12 @@ const QuestionScreen = (props) => {
           Question Number: {count + 1} of {testData.length}
         </Text>
       </View>
-
-      <Button title="Next Question" onPress={onPress} />
+      {count < 49 ? (
+        <Button title="Next Question" onPress={handlePress} />
+      ) : (
+        <Button title="RESULTS" onPress={handlePress} />
+      )}
+      {/* <Button title="Next Question" onPress={onPress} /> */}
     </KeyboardAvoidingView>
   );
 };
