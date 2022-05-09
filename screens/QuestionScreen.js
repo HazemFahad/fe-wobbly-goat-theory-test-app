@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   Image,
+  Alert,
 } from "react-native";
 import { RadioButton } from "react-native-rapi-ui";
 import React, { useEffect, useState } from "react";
@@ -13,6 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { sendAnswer, getResults } from "../utils/api";
 import { useContext } from "react";
 import { UserContext } from "../contexts/user";
+import { CountDown } from "react-native-countdown-component";
 
 const QuestionScreen = (props) => {
   const { user } = useContext(UserContext);
@@ -23,6 +25,14 @@ const QuestionScreen = (props) => {
   const { email, password } = user;
 
   const testData = props.route.params.data.data;
+
+  const handleFinish = () => {
+    Alert.alert("Your time has ran out");
+    getResults(email, password, testData.test_id).then((data) => {
+      // console.log(data);
+      navigation.navigate("Result", { data });
+    });
+  };
 
   const onPress = () => {
     if (answer !== "") {
@@ -36,6 +46,7 @@ const QuestionScreen = (props) => {
             })
           );
           console.log(testData[count].test_id);
+          navigation.navigate("Result", { data });
         });
       }
       console.log(answer === testData[count].correct_answer);
@@ -56,6 +67,26 @@ const QuestionScreen = (props) => {
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
+      {testData.length === 50 ? (
+        <View style={{ padding: 50 }}>
+          <CountDown
+            size={30}
+            until={3420}
+            onFinish={() => {
+              handleFinish();
+            }}
+            showSeparator
+            timeToShow={["M", "S"]}
+            digitStyle={{
+              backgroundColor: "transparent",
+              borderWidth: 2,
+              borderColor: "transparent",
+            }}
+          />
+        </View>
+      ) : (
+        <></>
+      )}
       {testData[count].media ? (
         <Image
           style={styles.questionImage}
