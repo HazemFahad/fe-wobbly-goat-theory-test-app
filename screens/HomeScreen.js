@@ -27,13 +27,13 @@ const HomeScreen = () => {
   const { user, setUser } = useContext(UserContext);
   const [usersTests, setUsersTests] = useState([]);
   const [last8, setLast8] = useState([
-    { result: 1 },
-    { result: 1 },
     { result: 0 },
-    { result: 1 },
-    { result: 1 },
     { result: 0 },
-    { result: 1 },
+    { result: 0 },
+    { result: 0 },
+    { result: 0 },
+    { result: 0 },
+    { result: 0 },
     { result: 0 },
   ]);
   const screenWidth = Dimensions.get("window").width;
@@ -42,7 +42,7 @@ const HomeScreen = () => {
     getTestsByUser(user.email, user.password)
       .then((data) => {
         setUsersTests(data);
-        // setLast8(data.data.slice(-8));
+        setLast8(data.data.slice(-8));
       })
       .catch((err) => {
         console.log(err);
@@ -72,14 +72,14 @@ const HomeScreen = () => {
     datasets: [
       {
         data: [
-          last8[0].result,
-          last8[1].result,
-          last8[2].result,
-          last8[3].result,
-          last8[4].result,
-          last8[5].result,
-          last8[6].result,
-          last8[7].result,
+          last8[0].correct,
+          last8[1].correct,
+          last8[2].correct,
+          last8[3].correct,
+          last8[4].correct,
+          last8[5].correct,
+          last8[6].correct,
+          last8[7].correct,
         ],
         color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
         strokeWidth: 2, // optional
