@@ -28,6 +28,10 @@ const QuestionScreen = (props) => {
 
   const handleFinish = () => {
     Alert.alert("Your time has ran out");
+    getResults(email, password, testData.test_id).then((data) => {
+      // console.log(data);
+      navigation.navigate("Result", { data });
+    });
   };
 
   const onPress = () => {
@@ -42,6 +46,7 @@ const QuestionScreen = (props) => {
             })
           );
           console.log(testData[count].test_id);
+          navigation.navigate("Result", { data });
         });
       }
       console.log(answer === testData[count].correct_answer);
