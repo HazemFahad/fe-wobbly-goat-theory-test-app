@@ -1,4 +1,4 @@
-import React, { useContext, useCallback, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -18,6 +18,7 @@ import {
 } from "react-native-rapi-ui";
 import { getTestsByUser } from "../utils/api";
 import { UserContext } from "../contexts/user";
+import timeConverter from "../utils/helpers";
 
 const TestsHistoryScreen = () => {
   const { isDarkmode } = useTheme();
@@ -28,22 +29,22 @@ const TestsHistoryScreen = () => {
   const [practiceTests, setPracticeTests] = useState([]);
 
   useEffect(() => {
+    let mockData = [];
+    let practiceData = [];
     getTestsByUser(user.email, user.password)
       .then((data) => {
         setIsLoading(true);
         setTestData(data);
         data.data.map((test) => {
           if (test.type_id === 1) {
-            setMockTests((currMockTests) => {
-              return [...currMockTests, test];
-            });
+            mockData.push(test);
           } else {
-            setPracticeTests((currentPracticeTests) => {
-              return [...currentPracticeTests, test];
-            });
+            practiceData.push(test);
           }
-          setIsLoading(false);
         });
+        setPracticeTests(practiceData);
+        setMockTests(mockData);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -58,9 +59,9 @@ const TestsHistoryScreen = () => {
             flex: 1,
             alignItems: "center",
             justifyContent: "center",
+            backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,
           }}
         >
-          {console.log("loading")}
           <ActivityIndicator size="large" color={themeColor.primary} />
         </View>
       </Layout>
@@ -68,40 +69,41 @@ const TestsHistoryScreen = () => {
   } else {
     return (
       <KeyboardAvoidingView>
-        <Layout>
-          <ScrollView>
-            <View
-              style={{
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              {console.log(mockTests)}
-              <Text>Mock Tests</Text>
-              {mockTests.map((test) => {
-                console.log(test);
-                return (
-                  <View key={test.test_id}>
-                    <Text>{test.created_at}</Text>
-                    {test.result ? <Text>Pass</Text> : <Text>Fail</Text>}
-                    <Text>{test.correct}/50</Text>
-                  </View>
-                );
-              })}
-              <Text>Practice Tests</Text>
-              {practiceTests.map((test) => {
-                return (
-                  <View key={test.test_id}>
-                    <Text>{test.created_at}</Text>
-                    <Text>{test.correct}/10</Text>
-                  </View>
-                );
-              })}
-              <ActivityIndicator size="large" color={themeColor.primary} />
-            </View>
-          </ScrollView>
-        </Layout>
+        <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,
+            }}
+          >
+            <Text>Mock Tests</Text>
+            {mockTests.reverse().map((test) => {
+              return (
+                <View key={test.test_id}>
+                  <Text>{timeConverter(test.created_at)}</Text>
+                  {test.result ? <Text>Pass</Text> : <Text>Fail</Text>}
+                  <Text>{test.correct}/50</Text>
+                </View>
+              );
+            })}
+            <Text>Practice Tests</Text>
+            {practiceTests.reverse().map((test) => {
+              return (
+                <View key={test.test_id}>
+                  <Text>{timeConverter(test.created_at)}</Text>
+                  <Text>{test.correct}/10</Text>
+                </View>
+              );
+            })}
+            <ActivityIndicator size="large" color={themeColor.primary} />
+          </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     );
   }

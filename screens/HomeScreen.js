@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Dimensions,
   ScrollView,
+  ActivityIndicator,
   KeyboardAvoidingView,
 } from "react-native";
 import {
@@ -20,72 +21,34 @@ import {
 } from "react-native-rapi-ui";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../contexts/user";
+import useStats from "../hooks/useStats";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
   const { isDarkmode } = useTheme();
   const { user, setUser } = useContext(UserContext);
-  const [usersTests, setUsersTests] = useState([]);
-  const [last8, setLast8] = useState([
-    { result: 0 },
-    { result: 0 },
-    { result: 0 },
-    { result: 0 },
-    { result: 0 },
-    { result: 0 },
-    { result: 0 },
-    { result: 0 },
-  ]);
+
+  const { email, password } = user;
+  const { stats } = useStats(email, password);
   const screenWidth = Dimensions.get("window").width;
 
-  useEffect(() => {
-    getTestsByUser(user.email, user.password)
-      .then((data) => {
-        setUsersTests(data);
-        // setLast8(data.data.slice(-8));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [setLast8]);
+  let chartData = {};
+  chartData.labels = stats.data.labels.reverse();
+  chartData.datasets = [
+    {
+      data: stats.data.datasets.data.reverse(),
+      strokeWidth: 2,
+    },
+  ];
+  chartData.legend = ["Tests per month"];
+
+  console.log(stats.data, "<------ in home");
+
   const handleSignOut = async () => {
     try {
       await AsyncStorage.clear();
       setUser(null);
     } catch (error) {}
-  };
-
-  // const last8 = usersTests.slice(-8);
-  // console.log(last8);
-  const data = {
-    labels: [
-      "02/04",
-      "04/04",
-      "05/04",
-      "06/04",
-      "08/04",
-      "09/04",
-      "11/04",
-      "13/04",
-      "14/04",
-    ],
-    datasets: [
-      {
-        data: [
-          last8[0].result,
-          last8[1].result,
-          last8[2].result,
-          last8[3].result,
-          last8[4].result,
-          last8[5].result,
-          last8[6].result,
-          last8[7].result,
-        ],
-        // color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // optional
-        // strokeWidth: 2, // optional
-      },
-    ],
-    // legend: ["Test Progress"], // optional
   };
 
   return (
@@ -110,15 +73,16 @@ const HomeScreen = () => {
                   Welcome {user.name}
                 </Text>
                 <Text>Past test results</Text>
-                <Text>Practice</Text>
-                <Text>Passed...</Text>
-                <Text>Failed...</Text>
-                <Text>Mock</Text>
-                <Text>Passed...</Text>
-                <Text>Failed...</Text>
+                <Text>total test {stats.all}</Text>
+                <Text style={{}}>Practice</Text>
+                <Text>Passed...{stats.practice.pass}</Text>
+                <Text>Failed...{stats.practice.fail}</Text>
+                <Text>Mock </Text>
+                <Text>Passed...{stats.mock.pass}</Text>
+                <Text>Failed...{stats.mock.pass}</Text>
 
                 <LineChart
-                  data={data}
+                  data={chartData}
                   width={screenWidth}
                   height={220}
                   fromZero="True"
@@ -142,6 +106,7 @@ const HomeScreen = () => {
                       strokeWidth: "2",
                       stroke: "#ffa726",
                     },
+                    legend: ["Number of Tests"],
                   }}
                   bezier
                   style={{
