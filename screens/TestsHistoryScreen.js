@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import {
+  Picker,
   Layout,
   Button,
   Text,
@@ -28,6 +29,12 @@ const TestsHistoryScreen = () => {
   const [mockTests, setMockTests] = useState([]);
   const [practiceTests, setPracticeTests] = useState([]);
 
+  const [pickerValue, setPickerValue] = useState(null);
+  const items = [
+      { label: 'Mock tests', value: '2' },
+      { label: 'Practice tests', value: '1' },
+  ];
+
   useEffect(() => {
     let mockData = [];
     let practiceData = [];
@@ -36,7 +43,7 @@ const TestsHistoryScreen = () => {
         setIsLoading(true);
         setTestData(data);
         data.data.map((test) => {
-          if (test.type_id === 1) {
+          if (test.type_id === 2) {
             mockData.push(test);
           } else {
             practiceData.push(test);
@@ -68,7 +75,28 @@ const TestsHistoryScreen = () => {
     );
   } else {
     return (
-      <KeyboardAvoidingView>
+      <Layout style={{marginTop:0}}>
+<View style={{margin:20,marginTop:-25 ,backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,}}>
+                                <Text
+              size="h3"
+              fontWeight="bold"
+              style={{
+                marginBottom: 20,
+                marginTop:10,
+                
+              }}
+            >
+              Choose your test type:
+            </Text>
+
+<Picker
+                        items={items}
+                        value={pickerValue}
+                        placeholder="Choose your role"
+                        onValueChange={(val) => setPickerValue(val)}
+                    />
+
+</View>
         <ScrollView
           contentContainerStyle={{
             flexGrow: 1,
@@ -77,36 +105,76 @@ const TestsHistoryScreen = () => {
           <View
             style={{
               flex: 1,
-              alignItems: "center",
               justifyContent: "center",
               backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,
             }}
           >
-            <Text>Mock Tests</Text>
+
+
+{(pickerValue==2)?
+<>
+            
             {mockTests.reverse().map((test) => {
               return (
-                <View key={test.test_id}>
+                <View key={test.test_id} style={test.correct >= 43 ? styles.pass : styles.fail}>
                   <Text>{timeConverter(test.created_at)}</Text>
                   {test.result ? <Text>Pass</Text> : <Text>Fail</Text>}
                   <Text>{test.correct}/50</Text>
                 </View>
               );
             })}
-            <Text>Practice Tests</Text>
+</>
+:<></>}
+
+{(pickerValue==1)?
+<>
+            
             {practiceTests.reverse().map((test) => {
               return (
-                <View key={test.test_id}>
+                <View key={test.test_id} style={test.correct >= 9 ? styles.pass : styles.fail}>
                   <Text>{timeConverter(test.created_at)}</Text>
                   <Text>{test.correct}/10</Text>
                 </View>
               );
             })}
-            <ActivityIndicator size="large" color={themeColor.primary} />
+ </>:<></>}           
+            
           </View>
         </ScrollView>
-      </KeyboardAvoidingView>
+      </Layout>
     );
   }
 };
+
+
+
+
+
+const styles = StyleSheet.create({
+  fail: {
+    flexDirection:"row",
+    justifyContent:"space-between",
+    marginTop:5,
+    marginBottom:5,
+    marginRight:20,
+    marginLeft:20,
+    borderRadius:10,
+    padding:15,
+    backgroundColor:"red"
+  },
+  pass: {
+    flexDirection:"row",
+    justifyContent:"space-between",
+    marginTop:5,
+    marginBottom:5,
+    marginRight:20,
+    marginLeft:20,
+    borderRadius:10,
+    padding:15,
+    backgroundColor:"green"
+  }
+
+});
+
 
 export default TestsHistoryScreen;
