@@ -78,3 +78,14 @@ export const getCenters = (postcode) => {
       return data;
     });
 };
+
+export const getStats = (email, password) => {
+  return theoryTestApi
+    .post(`/stats`, {
+      email: email,
+      password: password,
+    })
+    .then(({ data }) => {
+      return data;
+    });
+};

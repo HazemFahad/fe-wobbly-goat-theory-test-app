@@ -11,27 +11,22 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { Icon } from "react-native-elements";
 import ActionBarImage from "./ActionBarImage";
-import TestScreen from "../screens/TestScreen";//TestOrQuizScreen // TestSelecor
+import TestScreen from "../screens/TestScreen"; //TestOrQuizScreen // TestSelecor
 import HomeScreen from "../screens/HomeScreen";
 import { UserContext } from "../contexts/user";
 import TestsHistoryScreen from "../screens/TestsHistoryScreen";
 import FindCentersScreen from "../screens/FindCentersScreen";
 import ChangePasswordScreen from "../screens/ChangePasswordScreen";
-
 const Drawer = createDrawerNavigator();
-
 const DrawerNavigator = () => {
   const { isDarkmode, setTheme } = useTheme();
-  const { user,setUser } = useContext(UserContext);
-
+  const { user, setUser } = useContext(UserContext);
   const handleSignOut = async () => {
     try {
       await AsyncStorage.clear();
       setUser(null);
     } catch (error) {}
-  }
-
-
+  };
   return (
     <Drawer.Navigator
       initialRouteName="Home"
@@ -63,7 +58,6 @@ const DrawerNavigator = () => {
               </Text>
             </View>
             <DrawerItemList {...props} />
-
             <DrawerItem
               label={isDarkmode ? "☀️ light theme" : "🌑 dark theme"}
               icon={(focused, color, size) => {
@@ -137,7 +131,7 @@ const DrawerNavigator = () => {
           headerRight: () => <ActionBarImage />,
         }}
       />
-            <Drawer.Screen
+      <Drawer.Screen
         name="find"
         component={FindCentersScreen}
         options={{
@@ -152,7 +146,7 @@ const DrawerNavigator = () => {
           headerRight: () => <ActionBarImage />,
         }}
       />
-            <Drawer.Screen
+      <Drawer.Screen
         name="ChangePassword"
         component={ChangePasswordScreen}
         options={{
@@ -170,5 +164,4 @@ const DrawerNavigator = () => {
     </Drawer.Navigator>
   );
 };
-
 export default DrawerNavigator;

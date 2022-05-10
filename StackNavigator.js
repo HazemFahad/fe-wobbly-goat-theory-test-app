@@ -12,16 +12,12 @@ import TestsHistoryScreen from "./screens/TestsHistoryScreen";
 import FindCentersScreen from "./screens/FindCentersScreen";
 import DrawerNavigator from "./components/DrawerNavigator";
 import { UserContext } from "./contexts/user";
-
 import PracticeSelector from "./screens/ChooseCategoryScreen";
 import PrePracticeSelector from "./screens/StartCategoryQuizScreen";
 // import QuestionPage from "./screens/QuestionPageScreen";
-
 const Stack = createNativeStackNavigator();
-
 const StackNavigator = () => {
   const { user } = useContext(UserContext);
-
   return (
     <Stack.Navigator
       screenOptions={{
@@ -31,18 +27,14 @@ const StackNavigator = () => {
       {user ? (
         <>
           <Stack.Screen name="Main" component={DrawerNavigator} />
-
           {/* <Stack.Screen name="Test" component={TestScreen} /> */}
           <Stack.Screen name="Question" component={QuestionScreen} />
-
           <Stack.Screen name="Result" component={ResultScreen} />
-
           <Stack.Screen name="TestsHistory" component={TestsHistoryScreen} />
           <Stack.Screen
             name="ChangePassword"
             component={ChangePasswordScreen}
           />
-
           <Stack.Screen name="Test" component={TestScreen} />
           <Stack.Screen name="PracticeSelector" component={PracticeSelector} />
           <Stack.Screen
@@ -66,5 +58,4 @@ const StackNavigator = () => {
     </Stack.Navigator>
   );
 };
-
 export default StackNavigator;
