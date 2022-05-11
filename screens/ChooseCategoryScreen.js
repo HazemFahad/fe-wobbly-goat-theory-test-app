@@ -5,9 +5,9 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   ActivityIndicator,
-  Button,
 } from "react-native";
 import {
+  Button,
   Picker,
   Layout,
   Text,
@@ -74,57 +74,52 @@ const ChooseCategoryScreen = () => {
   return (
     <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1 }}>
       <Layout>
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,
           }}
         >
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,
-            }}
-          >
-            <Section>
-              <Text fontWeight="bold" style={{ textAlign: "center" }}>
-                Please choose the categories, or select nothing to get question
-                from all categories.
-              </Text>
-              <SectionContent>
-                <View style={styles.selector}>
-                  <MultiSelect
-                    hideTags
-                    items={categories}
-                    uniqueKey="category_id"
-                    onSelectedItemsChange={onSelectedItemsChange}
-                    selectedItems={selectedItems}
-                    selectText="Pick Items"
-                    searchInputPlaceholderText="Search Items..."
-                    onChangeInput={(text) => console.log(text)}
-                    tagRemoveIconColor="#CCC"
-                    tagBorderColor="#CCC"
-                    tagTextColor="#CCC"
-                    selectedItemTextColor="#CCC"
-                    selectedItemIconColor="#CCC"
-                    itemTextColor="#000"
-                    displayKey="category_name"
-                    searchInputStyle={{ color: "#CCC" }}
-                    submitButtonColor="#CCC"
-                    submitButtonText="Submit"
-                  />
-                </View>
-
-                <Button
-                  style={styles.input}
-                  title="Quiz by category"
-                  onPress={handlePressPracticeCat}
+          <Section style={styles.selectorContainer}>
+            <Text fontWeight="bold" style={{ textAlign: "center" }}>
+              Please choose the categories, or select nothing to get question
+              from all categories.
+            </Text>
+            <SectionContent>
+              <View style={styles.selector}>
+                <MultiSelect
+                  hideTags
+                  items={categories}
+                  uniqueKey="category_id"
+                  onSelectedItemsChange={onSelectedItemsChange}
+                  selectedItems={selectedItems}
+                  selectText="Pick Items"
+                  searchInputPlaceholderText="Search Items..."
+                  tagRemoveIconColor="#CCC"
+                  tagBorderColor="#CCC"
+                  tagTextColor="#CCC"
+                  selectedItemTextColor="#0369a1"
+                  selectedItemIconColor="#0369a1"
+                  itemTextColor="#000"
+                  displayKey="category_name"
+                  searchInputStyle={{ color: "#CCC" }}
+                  submitButtonColor="#CCC"
+                  submitButtonText="Submit"
+                  hideSubmitButton
                 />
-              </SectionContent>
-            </Section>
-          </View>
-        </ScrollView>
+              </View>
+
+              <Button
+                style={styles.input}
+                text="Start Quiz!"
+                onPress={handlePressPracticeCat}
+                status="info700"
+              />
+            </SectionContent>
+          </Section>
+        </View>
       </Layout>
     </KeyboardAvoidingView>
   );
@@ -147,5 +142,10 @@ const styles = StyleSheet.create({
 
   selector: {
     width: "100%",
+  },
+
+  selectorContainer: {
+    width: "90%",
+    height: "80%",
   },
 });

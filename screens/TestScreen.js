@@ -3,17 +3,18 @@
 import {
   StyleSheet,
   KeyboardAvoidingView,
-  Button,
   ActivityIndicator,
   ScrollView,
   View,
   Image,
+  ImageBackground,
 } from "react-native";
 import {
   Picker,
   Layout,
   Text,
   Section,
+  Button,
   SectionContent,
   useTheme,
   themeColor,
@@ -64,33 +65,36 @@ const TestScreen = () => {
 
   return (
     <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1 }}>
-      <Layout>
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+        }}
+      >
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,
           }}
         >
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,
-            }}
-          >
-            <Button
-              style={styles.input}
-              title="New Practice Quiz"
-              onPress={() => navigation.navigate("PracticeSelector")}
-            />
-            <Button
-              style={styles.input}
-              title="Full Theory test"
-              onPress={handlePressFullTest}
-            />
-          </View>
-        </ScrollView>
-      </Layout>
+          <Button
+            status="info700"
+            style={styles.button}
+            text="Practice Quiz (10 Questions)"
+            onPress={() => navigation.navigate("PracticeSelector")}
+            width={300}
+          />
+
+          <Button
+            style={styles.button}
+            text="Full Theory Test (50 Questions)"
+            onPress={handlePressFullTest}
+            status="info700"
+            width={300}
+          />
+        </View>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };
@@ -110,8 +114,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 
-  questionImage: {
-    height: "50%",
-    width: "100%",
+  button: {
+    margin: 10,
+    width: "70%",
   },
 });
