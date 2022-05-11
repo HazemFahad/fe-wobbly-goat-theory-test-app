@@ -36,35 +36,36 @@ const TestScreen = () => {
 
     getNewTest(email, password, 2, []).then((data) => {
       setLoading(false);
-      // console.log(data);
       navigation.navigate("Question", { data });
     });
   };
 
   if (loading) {
     return (
-      <Layout>
-        <View
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#0887C9",
+        }}
+      >
+        <Image
+          source={require("../assets/splash.png")}
           style={{
-            flex: 1,
             alignItems: "center",
             justifyContent: "center",
+            height: 400,
+            width: 400,
           }}
-        >
-          <Image
-            source={{
-              uri: `https://cdn.booooooom.com/wp-content/uploads/2018/01/igor-bastidas-8.gif`,
-            }}
-            style={styles.questionImage}
-          />
-          <ActivityIndicator size="large" color={themeColor.primary} />
-        </View>
-      </Layout>
+        />
+        <ActivityIndicator size="large" color="#fff" />
+      </View>
     );
   }
 
   return (
-    <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1 }}>
+    <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1, backgroundColor: isDarkmode ? "#17171E" : themeColor.white100, }}>
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
@@ -75,26 +76,47 @@ const TestScreen = () => {
             flex: 1,
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,
+
           }}
         >
+          <Image
+            source={require("../assets/icon.png")}
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              height: 200,
+              width: 200,
+              marginBottom: 30,
+            }}></Image>
+          <Text fontWeight="bold" style={{ textAlign: "center", fontSize: 22, marginBottom: 20, }}>Choose the type of test</Text>
           <Button
             status="info700"
             style={styles.button}
             text="Practice Quiz (10 Questions)"
             onPress={() => navigation.navigate("PracticeSelector")}
-            width={300}
+            width={350}
           />
 
           <Button
             style={styles.button}
-            text="Full Theory Test (50 Questions)"
+            text="Mock Theory Test (50 Questions)"
             onPress={handlePressFullTest}
             status="info700"
-            width={300}
+            width={350}
           />
         </View>
       </ScrollView>
+      <View style={{ alignItems: "center", marginBottom: 30 }}>
+        <Button
+          status="info700"
+          style={styles.button}
+          text="Return To Home"
+          onPress={() => navigation.navigate("Home")}
+          width={350}
+        />
+
+      </View>
+
     </KeyboardAvoidingView>
   );
 };

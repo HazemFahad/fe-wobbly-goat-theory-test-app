@@ -26,7 +26,7 @@ const RegisterScreen = () => {
   const [password_confirmation, setPasswordConfirm] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleRegister = async () =>{
+  const handleRegister = async () => {
     setLoading(true);
     try {
       let { success, data } = await auth.createUserWithEmailAndPassword(
@@ -147,7 +147,7 @@ const RegisterScreen = () => {
             />
 
             <Button
-            status="info700"
+              status="info700"
               text={loading ? "Loading" : "Create an account"}
               onPress={() => {
                 handleRegister();

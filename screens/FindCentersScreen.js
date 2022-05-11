@@ -27,9 +27,8 @@ const FindCentersScreen = () => {
     setLoading(true);
     try {
       let { success, data } = await getCenters(postcode);
-      
+
       if (success) {
-        //console.log(data);
         setCenters(data);
       } else {
         let mssg = "";
@@ -49,37 +48,37 @@ const FindCentersScreen = () => {
   return (
     <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1 }}>
       <Layout>
-        <View style={{marginRight:20,marginLeft:20}}>
-        <Text
-              size="h3"
-              fontWeight="bold"
-              style={{
-                marginBottom: 20,
-              }}
-            >
-              Find your nearest test center
-            </Text>
-            <Text>Your postcode</Text>
-            <TextInput
-              containerStyle={{ marginTop: 15 }}
-              placeholder="Enter your postcode"
-              value={postcode}
-              autoCapitalize="none"
-              autoCompleteType="off"
-              autoCorrect={false}
-              onChangeText={(text) => setPostCode(text)}
-            />
-            <Button
+        <View style={{ marginRight: 20, marginLeft: 20 }}>
+          <Text
+            size="h3"
+            fontWeight="bold"
+            style={{
+              marginBottom: 20,
+            }}
+          >
+            Find your nearest test center
+          </Text>
+          <Text>Your postcode</Text>
+          <TextInput
+            containerStyle={{ marginTop: 15 }}
+            placeholder="Enter your postcode"
+            value={postcode}
+            autoCapitalize="none"
+            autoCompleteType="off"
+            autoCorrect={false}
+            onChangeText={(text) => setPostCode(text)}
+          />
+          <Button
             status="info700"
-              text={loading ? "Loading" : "Search"}
-              onPress={() => {
-                handleSearch();
-              }}
-              style={{
-                marginTop: 20,
-              }}
-              disabled={loading}
-            />
+            text={loading ? "Loading" : "Search"}
+            onPress={() => {
+              handleSearch();
+            }}
+            style={{
+              marginTop: 20,
+            }}
+            disabled={loading}
+          />
         </View>
         <ScrollView
           contentContainerStyle={{
@@ -93,11 +92,11 @@ const FindCentersScreen = () => {
               padding: 20,
             }}
           >
-            
 
 
 
-            {centers.map((center)=>{
+
+            {centers.map((center) => {
               return <View
                 style={{
                   marginTop: 10,
@@ -111,12 +110,12 @@ const FindCentersScreen = () => {
                 <Text><Text fontWeight="bold">locality:</Text> {center.locality}</Text>
                 <Text><Text fontWeight="bold">Postcode:</Text> {center.postcode}</Text>
                 <View
-  style={{
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
-    marginTop: 10,
-  }}
-/>
+                  style={{
+                    borderBottomColor: 'black',
+                    borderBottomWidth: 1,
+                    marginTop: 10,
+                  }}
+                />
               </View>
             })
 
