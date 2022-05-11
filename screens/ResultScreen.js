@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { View, ActivityIndicator, Text, Button } from "react-native";
-import { Layout, themeColor } from "react-native-rapi-ui";
+import { View, ActivityIndicator, Text, StyleSheet } from "react-native";
+import { Layout, themeColor, Button, Ionicons } from "react-native-rapi-ui";
 import { getResults } from "../utils/api";
 import { useNavigation } from "@react-navigation/native";
 
@@ -24,17 +24,16 @@ const ResultScreen = (props) => {
 
   return (
     <Layout>
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <View style={styles.container}>
         {result / totalCalculator.length >= 0.86 ? (
           <Text
             style={{
               color: "#00FF00",
+              fontSize: 100,
+              fontWeight: "bold",
+              alignContent: "center",
+              justifyContent: "center",
+              textAlign: "center",
             }}
           >
             PASS
@@ -43,23 +42,41 @@ const ResultScreen = (props) => {
           <Text
             style={{
               color: "#FF0000",
+              fontSize: 100,
+              fontWeight: "bold",
+              alignContent: "center",
+              justifyContent: "center",
+              textAlign: "center",
             }}
           >
             FAIL
           </Text>
         )}
-        <Text>
+        <Text
+          style={{
+            color: "black",
+            fontSize: 40,
+            fontWeight: "bold",
+            alignContent: "center",
+            justifyContent: "center",
+            textAlign: "center",
+          }}
+        >
           Your Score is {result}/{totalCalculator.length}
         </Text>
 
         <Button
-          title="Review Test"
+          status="info700"
+          style={{ bottom: -50, marginBottom: 150 }}
+          text="Review Test"
           onPress={() => {
             navigation.navigate("Review", { resultsData });
           }}
         />
         <Button
-          title="Return Home"
+          status="info700"
+          style={{ bottom: 80, marginBottom: 150 }}
+          text="Return Home"
           onPress={() => {
             navigation.navigate("Home");
           }}
@@ -70,3 +87,11 @@ const ResultScreen = (props) => {
 };
 
 export default ResultScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 150,
+    flex: 1,
+    padding: 50,
+  },
+});
