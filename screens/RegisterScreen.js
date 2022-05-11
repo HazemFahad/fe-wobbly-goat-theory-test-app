@@ -147,6 +147,7 @@ const RegisterScreen = () => {
             />
 
             <Button
+            status="info700"
               text={loading ? "Loading" : "Create an account"}
               onPress={() => {
                 handleRegister();

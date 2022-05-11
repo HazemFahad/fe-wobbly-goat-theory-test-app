@@ -49,20 +49,8 @@ const FindCentersScreen = () => {
   return (
     <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1 }}>
       <Layout>
-        <ScrollView
-          style={{ backgroundColor: themeColor.success700 }}
-          contentContainerStyle={{
-            flexGrow: 1,
-          }}
-        >
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,
-              padding: 20,
-            }}
-          >
-            <Text
+        <View style={{marginRight:20,marginLeft:20}}>
+        <Text
               size="h3"
               fontWeight="bold"
               style={{
@@ -82,6 +70,7 @@ const FindCentersScreen = () => {
               onChangeText={(text) => setPostCode(text)}
             />
             <Button
+            status="info700"
               text={loading ? "Loading" : "Search"}
               onPress={() => {
                 handleSearch();
@@ -91,6 +80,20 @@ const FindCentersScreen = () => {
               }}
               disabled={loading}
             />
+        </View>
+        <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,
+              padding: 20,
+            }}
+          >
+            
 
 
 

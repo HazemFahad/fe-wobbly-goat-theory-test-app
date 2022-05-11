@@ -101,6 +101,7 @@ const ForgetPasswordScreen = () => {
               onChangeText={(text) => setEmail(text)}
             />
             <Button
+            status="info700"
               text={loading ? "Loading" : "Send email"}
               onPress={() => {
                 handleForget();

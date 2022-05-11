@@ -1,7 +1,6 @@
 import React, { useContext, useCallback, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LineChart } from "react-native-chart-kit";
-import { getTestsByUser } from "../utils/api";
 import {
   View,
   StyleSheet,
@@ -30,7 +29,7 @@ const HomeScreen = () => {
 
   const { email, password } = user;
   const { stats } = useStats(email, password);
-  const screenWidth = Dimensions.get("window").width;
+  const screenWidth = Dimensions.get("window").width-40;
 
   let chartData = {};
   chartData.labels = stats.data.labels.reverse();
@@ -52,16 +51,11 @@ const HomeScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1 }}>
-      <Layout>
-        <ScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-          }}
-        >
+
           <View
             style={{
               flex: 1,
+              flexGrow:1,
               // justifyContent: "center",
               // alignItems: "center",
               backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,
@@ -69,17 +63,35 @@ const HomeScreen = () => {
           >
             <Section>
               <SectionContent>
-                <Text fontWeight="bold" style={{ textAlign: "center" }}>
+                <Text fontWeight="bold" style={{ textAlign: "center" ,fontSize:22}}>
                   Welcome {user.name}
                 </Text>
-                <Text>Past test results</Text>
-                <Text>total test {stats.all}</Text>
-                <Text style={{}}>Practice</Text>
-                <Text>Passed...{stats.practice.pass}</Text>
-                <Text>Failed...{stats.practice.fail}</Text>
-                <Text>Mock </Text>
-                <Text>Passed...{stats.mock.pass}</Text>
-                <Text>Failed...{stats.mock.pass}</Text>
+
+                <Text fontWeight="bold" style={{ textAlign: "center" ,fontSize:18,marginTop:30,}}>Practice</Text>
+
+                <View style={styles.statsBox}>
+                  <Text style={styles.pass}>Passed Tests</Text>
+                  <Text style={styles.pass}>{stats.practice.pass}</Text>
+                </View>
+
+                <View style={styles.statsBox}>
+                  <Text style={styles.fail}>Failed Tests</Text>
+                  <Text style={styles.fail}>{stats.practice.fail}</Text>
+                </View>               
+
+
+                <Text fontWeight="bold" style={{ textAlign: "center" ,fontSize:18}}>Mock </Text>
+
+                <View style={styles.statsBox}>
+                  <Text style={styles.pass}>Passed Tests</Text>
+                  <Text style={styles.pass}>{stats.mock.pass}</Text>
+                </View>
+
+                <View style={styles.statsBox}>
+                  <Text style={styles.fail}>Failed Tests</Text>
+                  <Text style={styles.fail}>{stats.mock.fail}</Text>
+                </View>  
+
 
                 <LineChart
                   data={chartData}
@@ -99,7 +111,7 @@ const HomeScreen = () => {
                     labelColor: (opacity = 1) =>
                       `rgba(255, 255, 255, ${opacity})`,
                     style: {
-                      borderRadius: 0,
+                      
                     },
                     propsForDots: {
                       r: "6",
@@ -115,11 +127,14 @@ const HomeScreen = () => {
                     alignContent: "center",
                     marginRight: 0,
                     padding: 0,
+                    borderRadius: 10,
                   }}
                 />
+                <Text style={{textAlign:"center",padding:22,fontWeight:"bold",fontSize:18,}}>Total Tests: {stats.all}</Text>
 
                 <Button
                   text="Start new test"
+                  status="info700"
                   onPress={() => {
                     navigation.navigate("Test");
                   }}
@@ -140,10 +155,27 @@ const HomeScreen = () => {
               </SectionContent>
             </Section>
           </View>
-        </ScrollView>
-      </Layout>
-    </KeyboardAvoidingView>
   );
 };
+
+
+const styles = StyleSheet.create({
+  statsBox: {
+    flexDirection:"row",
+    justifyContent:"space-between",
+    marginTop:5,
+    marginBottom:5,
+    borderRadius:10,
+  },
+  pass: {
+    color:"green",
+    fontWeight:"bold"
+  },
+  fail: {
+    color:"red",
+    fontWeight:"bold"
+  },
+
+});
 
 export default HomeScreen;
