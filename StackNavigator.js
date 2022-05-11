@@ -14,6 +14,7 @@ import DrawerNavigator from "./components/DrawerNavigator";
 import { UserContext } from "./contexts/user";
 import PracticeSelector from "./screens/ChooseCategoryScreen";
 import PrePracticeSelector from "./screens/StartCategoryQuizScreen";
+import ReviewScreen from "./screens/ReviewScreen";
 // import QuestionPage from "./screens/QuestionPageScreen";
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => {
@@ -41,6 +42,7 @@ const StackNavigator = () => {
             name="PrePracticeSelector"
             component={PrePracticeSelector}
           />
+          <Stack.Screen name="Review" component={ReviewScreen} />
           <Stack.Screen name="find" component={FindCentersScreen} />
           {/* <Stack.Screen name="QueestionPage" component={QuestionPage} /> */}
         </>
