@@ -91,9 +91,9 @@ const DrawerNavigator = () => {
         options={{
           title: "🏠 Home", //Set Header Title
           headerStyle: {
-            backgroundColor: "#d8d8d8", //Set Header color
+            backgroundColor: "#0887c9",
           },
-          headerTintColor: "black", //Set Header text color
+          headerTintColor: "white", //Set Header text color
           headerTitleStyle: {
             fontWeight: "bold", //Set Header text style
           },
@@ -107,9 +107,9 @@ const DrawerNavigator = () => {
         options={{
           title: "⁉️ Start new test",
           headerStyle: {
-            backgroundColor: "#d8d8d8",
+            backgroundColor: "#0887c9",
           },
-          headerTintColor: "black",
+          headerTintColor: "white",
           headerTitleStyle: {
             fontWeight: "bold",
           },
@@ -122,9 +122,9 @@ const DrawerNavigator = () => {
         options={{
           title: "📜 Test History",
           headerStyle: {
-            backgroundColor: "#d8d8d8",
+            backgroundColor: "#0887c9",
           },
-          headerTintColor: "black",
+          headerTintColor: "white",
           headerTitleStyle: {
             fontWeight: "bold",
           },
@@ -137,9 +137,9 @@ const DrawerNavigator = () => {
         options={{
           title: "🔍 Find center",
           headerStyle: {
-            backgroundColor: "#d8d8d8",
+            backgroundColor: "#0887c9",
           },
-          headerTintColor: "black",
+          headerTintColor: "white",
           headerTitleStyle: {
             fontWeight: "bold",
           },
@@ -152,9 +152,9 @@ const DrawerNavigator = () => {
         options={{
           title: "🔑 Change Password",
           headerStyle: {
-            backgroundColor: "#d8d8d8",
+            backgroundColor: "#0887c9",
           },
-          headerTintColor: "black",
+          headerTintColor: "white",
           headerTitleStyle: {
             fontWeight: "bold",
           },

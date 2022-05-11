@@ -9,10 +9,10 @@ const ActionBarImage = () => {
   return (
     <View style={{ flexDirection: "row" }}>
       <Image
-        source={require("../assets/test.png")}
+        source={require("../assets/icon.png")}
         style={{
-          width: 60,
-          height: 60,
+          width: 40,
+          height: 40,
           //   borderRadius: 40 / 2,
           marginRight: 10,
         }}
