@@ -54,7 +54,6 @@ const TestsHistoryScreen = () => {
         setIsLoading(false);
       })
       .catch((err) => {
-        console.log(err);
       });
   }, [setTestData]);
 

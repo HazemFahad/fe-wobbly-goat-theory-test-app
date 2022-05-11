@@ -27,11 +27,8 @@ const PrePracticeSelector = (props) => {
         setQuiz(data);
       })
       .catch((err) => {
-        console.log(err);
       });
   }, []);
-
-  // console.log(categoryArr);
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, ActivityIndicator, Text, StyleSheet } from "react-native";
-import { Layout, themeColor, Button, Ionicons ,useTheme} from "react-native-rapi-ui";
+import { Layout, themeColor, Button, Ionicons, useTheme } from "react-native-rapi-ui";
 import { getResults } from "../utils/api";
 import { useNavigation } from "@react-navigation/native";
 
@@ -24,7 +24,7 @@ const ResultScreen = (props) => {
   const result = totalCalculator.reduce((a, b) => a + b, 0);
 
   return (
-    <Layout style={{backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,}}>
+    <Layout style={{ backgroundColor: isDarkmode ? "#17171E" : themeColor.white100, }}>
       <View style={styles.container}>
         {result / totalCalculator.length >= 0.86 ? (
           <Text
@@ -60,7 +60,7 @@ const ResultScreen = (props) => {
             alignContent: "center",
             justifyContent: "center",
             textAlign: "center",
-            color: isDarkmode ? themeColor.white100: "#17171E" ,
+            color: isDarkmode ? themeColor.white100 : "#17171E",
           }}
         >
           Your Score is {result}/{totalCalculator.length}

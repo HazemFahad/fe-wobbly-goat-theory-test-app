@@ -71,7 +71,7 @@ const QuestionScreen = (props) => {
   };
 
   return (
-    <SafeAreaView style={{flex:1,backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: isDarkmode ? "#17171E" : themeColor.white100, }}>
       {/* ******* COUNTDOWN TIMER ******* */}
       {testData.length === 50 ? (
         <View style={{ paddingBottom: 0, marginBottom: 0 }}>
@@ -94,81 +94,81 @@ const QuestionScreen = (props) => {
       )}
 
       {/* ******* IS THERE AN IMAGE ATTACHED TO QUESTION? ******* */}
-      <View  style={{flex:1,}}>
-      <ScrollView style={{marginTop:40,}}>
-        <View style={styles.container} behavior="padding">
-          {testData[count].media ? ( 
-            <Image
-              style={styles.questionImage}
-              source={{
-                uri: `https://theory.sajjel.info/assets/images/${testData[count].media}`,
-              }}
-            />
-         ) : (
-            // <Image
-            //   source={require("../assets/icon.png")}
-            //   style={styles.questionImage}
-            // />
-            <></>
-          )}
-
-          {/* ******* THE QUESTION ******* */}
-
-          <Text style={styles.questionText}>{testData[count].question}</Text>
-
-          {/* ******* ANSWER CONTAINER ******* */}
-
-          <View style={{flexDirection: 'row',flexWrap: 'wrap',alignItems:"center",alignContent:"center",marginLeft:30,marginTop:30,}}>
-            {/* ******* ANSWER MAP ******* */}
-
-            {testData[count].answers.map(
-              ({ answer, answer_id, answer_number, answer_media }) => {
-                return (
-                  <View key={answer_id} style={{}}>
-                    <TouchableOpacity
-                      style={styles.answer}
-                      onPress={() => {
-                        setAnswer(answer_number);
-                      }}
-                    >
-                      {answer_media ? (
-                        
-                        <Image
-                          style={{
-                            height: 150,
-                            width: 150,
-                             resizeMode: "contain",
-                             margin:20,
-                          
-                          
-                          paddingTop: 10
-                          }}
-                          source={{
-                            uri: `https://theory.sajjel.info/assets/images/${answer_media}`,
-                          }}
-                        />
-                        
-                      ) : (
-                        <Button
-                          style={styles.button}
-                          text={answer}
-                          onPress={() => {
-                            setAnswer(answer_number);
-                          }}
-                          status="info700"
-                          width={350}
-                        />
-                      )}
-                    </TouchableOpacity>
-                  </View>
-                );
-              }
+      <View style={{ flex: 1, }}>
+        <ScrollView style={{ marginTop: 40, }}>
+          <View style={styles.container} behavior="padding">
+            {testData[count].media ? (
+              <Image
+                style={styles.questionImage}
+                source={{
+                  uri: `https://theory.sajjel.info/assets/images/${testData[count].media}`,
+                }}
+              />
+            ) : (
+              // <Image
+              //   source={require("../assets/icon.png")}
+              //   style={styles.questionImage}
+              // />
+              <></>
             )}
+
+            {/* ******* THE QUESTION ******* */}
+
+            <Text style={styles.questionText}>{testData[count].question}</Text>
+
+            {/* ******* ANSWER CONTAINER ******* */}
+
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: "center", alignContent: "center", marginLeft: 30, marginTop: 30, }}>
+              {/* ******* ANSWER MAP ******* */}
+
+              {testData[count].answers.map(
+                ({ answer, answer_id, answer_number, answer_media }) => {
+                  return (
+                    <View key={answer_id} style={{}}>
+                      <TouchableOpacity
+                        style={styles.answer}
+                        onPress={() => {
+                          setAnswer(answer_number);
+                        }}
+                      >
+                        {answer_media ? (
+
+                          <Image
+                            style={{
+                              height: 150,
+                              width: 150,
+                              resizeMode: "contain",
+                              margin: 20,
+
+
+                              paddingTop: 10
+                            }}
+                            source={{
+                              uri: `https://theory.sajjel.info/assets/images/${answer_media}`,
+                            }}
+                          />
+
+                        ) : (
+                          <Button
+                            style={styles.button}
+                            text={answer}
+                            onPress={() => {
+                              setAnswer(answer_number);
+                            }}
+                            status="info700"
+                            width={350}
+                          />
+                        )}
+                      </TouchableOpacity>
+                    </View>
+                  );
+                }
+              )}
+            </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
       </View>
-      <View style={{alignItems: "center",}}>
+      <View style={{ alignItems: "center", }}>
         {count < 49 ? (
           <Button
             text="Next Question"
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
-  
+
   },
 
   input: {
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
 
   questionImage: {
     height: 230,
-    width:"100%",
+    width: "100%",
     resizeMode: "contain",
     justifyContent: "center",
     // flex: 2,
@@ -234,6 +234,6 @@ const styles = StyleSheet.create({
   nextButton: {
     justifyContent: "center",
     alignItems: "center",
-   
+
   },
 });

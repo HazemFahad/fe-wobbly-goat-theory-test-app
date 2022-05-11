@@ -30,13 +30,12 @@ const TestScreen = () => {
   const [loading, setLoading] = useState(false);
   const { email, password } = user;
   const { isDarkmode } = useTheme();
-  
+
   const handlePressFullTest = () => {
     setLoading(true);
 
     getNewTest(email, password, 2, []).then((data) => {
       setLoading(false);
-      // console.log(data);
       navigation.navigate("Question", { data });
     });
   };
@@ -66,7 +65,7 @@ const TestScreen = () => {
   }
 
   return (
-    <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1, backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,}}>
+    <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1, backgroundColor: isDarkmode ? "#17171E" : themeColor.white100, }}>
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
@@ -77,19 +76,19 @@ const TestScreen = () => {
             flex: 1,
             justifyContent: "center",
             alignItems: "center",
-            
+
           }}
         >
           <Image
-          source={require("../assets/icon.png")}
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            height: 200,
-            width: 200,
-            marginBottom:30,
-          }}></Image>
-          <Text fontWeight="bold" style={{ textAlign: "center" ,fontSize:22,marginBottom:20,}}>Choose the type of test</Text>
+            source={require("../assets/icon.png")}
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              height: 200,
+              width: 200,
+              marginBottom: 30,
+            }}></Image>
+          <Text fontWeight="bold" style={{ textAlign: "center", fontSize: 22, marginBottom: 20, }}>Choose the type of test</Text>
           <Button
             status="info700"
             style={styles.button}
@@ -107,14 +106,14 @@ const TestScreen = () => {
           />
         </View>
       </ScrollView>
-      <View style={{alignItems: "center",marginBottom:30}}>
-      <Button
-            status="info700"
-            style={styles.button}
-            text="Return To Home"
-            onPress={() => navigation.navigate("Home")}
-            width={350}
-          />
+      <View style={{ alignItems: "center", marginBottom: 30 }}>
+        <Button
+          status="info700"
+          style={styles.button}
+          text="Return To Home"
+          onPress={() => navigation.navigate("Home")}
+          width={350}
+        />
 
       </View>
 

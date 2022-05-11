@@ -33,7 +33,6 @@ const useStats = (email, password) => {
       setLoading(false);
       setStats(stateData);
     } catch (error) {
-      console.log(error);
       setLoading(false);
     }
   }, [email, password]);

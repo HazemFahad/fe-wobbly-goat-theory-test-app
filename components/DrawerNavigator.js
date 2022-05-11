@@ -25,7 +25,7 @@ const DrawerNavigator = () => {
     try {
       await AsyncStorage.clear();
       setUser(null);
-    } catch (error) {}
+    } catch (error) { }
   };
   return (
     <Drawer.Navigator

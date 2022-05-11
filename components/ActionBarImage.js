@@ -13,7 +13,7 @@ const ActionBarImage = () => {
         style={{
           width: 40,
           height: 40,
-          //   borderRadius: 40 / 2,
+          //borderRadius: 40 / 2,
           marginRight: 10,
         }}
       />

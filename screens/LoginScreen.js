@@ -39,7 +39,7 @@ const LoginScreen = () => {
           data.password = password;
           await AsyncStorage.setItem("userAuth", JSON.stringify(data));
           setUser(data);
-        } catch (error) {}
+        } catch (error) { }
       } else {
         let mssg = "";
         for (const msg in data) {
@@ -55,13 +55,6 @@ const LoginScreen = () => {
       alert(errorMessage);
     }
   };
-
-  useEffect(async () => {
-    console.log("LoginScreen mount.");
-    return () => {
-      console.log("LoginScreen unmount.");
-    };
-  }, [user]);
 
   return (
     <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1 }}>

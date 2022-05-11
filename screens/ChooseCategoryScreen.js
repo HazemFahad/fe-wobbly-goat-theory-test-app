@@ -44,7 +44,6 @@ const ChooseCategoryScreen = () => {
         setCategories(data);
       })
       .catch((err) => {
-        console.log(err);
       });
   }, []);
 

@@ -17,7 +17,6 @@ auth.signInWithEmailAndPassword = (email, password) => {
       return data;
     })
     .catch((err) => {
-      console.log(err, "<==========");
     });
 };
 
@@ -49,12 +48,12 @@ auth.sendPasswordResetEmail = (email) => {
     });
 };
 
-auth.changePassword = (email,password,password_new,password_confirmation) => {
+auth.changePassword = (email, password, password_new, password_confirmation) => {
   return theoryTestApi
     .post(`/user/password/change`, {
       email: email,
       password: password,
-      password_new:password_new,
+      password_new: password_new,
       password_confirmation: password_confirmation,
     })
     .then(({ data }) => {
