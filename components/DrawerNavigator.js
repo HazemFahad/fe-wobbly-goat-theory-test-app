@@ -91,7 +91,7 @@ const DrawerNavigator = () => {
         options={{
           title: "🏠 Home", //Set Header Title
           headerStyle: {
-            backgroundColor: "#0887c9",
+            backgroundColor: themeColor.info700,
           },
           headerTintColor: "white", //Set Header text color
           headerTitleStyle: {
@@ -107,7 +107,7 @@ const DrawerNavigator = () => {
         options={{
           title: "⁉️ Start new test",
           headerStyle: {
-            backgroundColor: "#0887c9",
+            backgroundColor: themeColor.info700,
           },
           headerTintColor: "white",
           headerTitleStyle: {
@@ -122,7 +122,7 @@ const DrawerNavigator = () => {
         options={{
           title: "📜 Test History",
           headerStyle: {
-            backgroundColor: "#0887c9",
+            backgroundColor: themeColor.info700,
           },
           headerTintColor: "white",
           headerTitleStyle: {
@@ -137,7 +137,7 @@ const DrawerNavigator = () => {
         options={{
           title: "🔍 Find center",
           headerStyle: {
-            backgroundColor: "#0887c9",
+            backgroundColor: themeColor.info700,
           },
           headerTintColor: "white",
           headerTitleStyle: {
@@ -152,7 +152,7 @@ const DrawerNavigator = () => {
         options={{
           title: "🔑 Change Password",
           headerStyle: {
-            backgroundColor: "#0887c9",
+            backgroundColor: themeColor.info700,
           },
           headerTintColor: "white",
           headerTitleStyle: {

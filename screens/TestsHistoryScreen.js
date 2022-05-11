@@ -31,8 +31,8 @@ const TestsHistoryScreen = () => {
 
   const [pickerValue, setPickerValue] = useState(null);
   const items = [
-      { label: 'Mock tests', value: '2' },
-      { label: 'Practice tests', value: '1' },
+      { label: 'Mock Tests', value: '2' },
+      { label: 'Practice Tests', value: '1' },
   ];
 
   useEffect(() => {
@@ -105,7 +105,6 @@ const TestsHistoryScreen = () => {
           <View
             style={{
               flex: 1,
-              justifyContent: "center",
               backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,
             }}
           >
@@ -117,9 +116,9 @@ const TestsHistoryScreen = () => {
             {mockTests.reverse().map((test) => {
               return (
                 <View key={test.test_id} style={test.correct >= 43 ? styles.pass : styles.fail}>
-                  <Text>{timeConverter(test.created_at)}</Text>
-                  {test.result ? <Text>Pass</Text> : <Text>Fail</Text>}
-                  <Text>{test.correct}/50</Text>
+                  <Text style={styles.txt}>{timeConverter(test.created_at)}</Text>
+                  {test.result ? <Text style={styles.txt}>Pass</Text> : <Text style={styles.txt}>Fail</Text>}
+                  <Text style={styles.txt}>{test.correct}/50</Text>
                 </View>
               );
             })}
@@ -132,8 +131,8 @@ const TestsHistoryScreen = () => {
             {practiceTests.reverse().map((test) => {
               return (
                 <View key={test.test_id} style={test.correct >= 9 ? styles.pass : styles.fail}>
-                  <Text>{timeConverter(test.created_at)}</Text>
-                  <Text>{test.correct}/10</Text>
+                  <Text style={styles.txt}>{timeConverter(test.created_at)}</Text>
+                  <Text style={styles.txt}>{test.correct}/10</Text>
                 </View>
               );
             })}
@@ -160,7 +159,7 @@ const styles = StyleSheet.create({
     marginLeft:20,
     borderRadius:10,
     padding:15,
-    backgroundColor:"red"
+    backgroundColor:"red",
   },
   pass: {
     flexDirection:"row",
@@ -171,7 +170,12 @@ const styles = StyleSheet.create({
     marginLeft:20,
     borderRadius:10,
     padding:15,
-    backgroundColor:"green"
+    backgroundColor:"green",
+  },
+  txt:{
+    color:"white",
+    fontWeight:"bold",
+    fontSize:18,
   }
 
 });

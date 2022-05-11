@@ -127,6 +127,7 @@ const ForgetPasswordScreen = () => {
               onChangeText={(text) => setPasswordConfirm(text)}
             />
             <Button
+              status="info700"
               text={loading ? "Loading" : "Continue"}
               onPress={handleChange}
               style={{
@@ -135,45 +136,8 @@ const ForgetPasswordScreen = () => {
               disabled={loading}
             />
 
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                marginTop: 15,
-                justifyContent: "center",
-              }}
-            >
-              <Text size="md">Don't have an account?</Text>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate("Register");
-                }}
-              >
-                <Text
-                  size="md"
-                  fontWeight="bold"
-                  style={{
-                    marginLeft: 5,
-                  }}
-                >
-                  Register here
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                marginTop: 10,
-                justifyContent: "center",
-              }}
-            >
-              <TouchableOpacity onPress={handleChange}>
-                <Text size="md" fontWeight="bold">
-                  Change my password
-                </Text>
-              </TouchableOpacity>
-            </View>
+
+
           </View>
         </ScrollView>
       </Layout>
