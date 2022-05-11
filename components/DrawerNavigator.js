@@ -32,7 +32,7 @@ const DrawerNavigator = () => {
       initialRouteName="Home"
       screenOptions={{
         headerShown: true,
-        headerTitleAlign: "right",
+        headerTitleAlign: "center",
         headerStyle: { backgroundColor: "red" },
       }}
       drawerPosition="Right"
@@ -59,7 +59,7 @@ const DrawerNavigator = () => {
             </View>
             <DrawerItemList {...props} />
             <DrawerItem
-              label={isDarkmode ? "☀️ light theme" : "🌑 dark theme"}
+              label={isDarkmode ? "☀️ Light theme" : "🌑 Dark theme"}
               icon={(focused, color, size) => {
                 <Icon name="g-translate" size={size} color={color} />;
               }}
@@ -100,6 +100,7 @@ const DrawerNavigator = () => {
           headerRight: () => <ActionBarImage />,
         }}
       />
+      {/*
       <Drawer.Screen
         name="Test"
         component={TestScreen}
@@ -116,6 +117,7 @@ const DrawerNavigator = () => {
           headerRight: () => <ActionBarImage />,
         }}
       />
+      */}
       <Drawer.Screen
         name="TestHistory"
         component={TestsHistoryScreen}

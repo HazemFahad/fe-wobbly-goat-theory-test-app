@@ -52,7 +52,7 @@ const HomeScreen = () => {
 
   return (
 
-          <View
+          <ScrollView
             style={{
               flex: 1,
               flexGrow:1,
@@ -154,7 +154,7 @@ const HomeScreen = () => {
                 />
               </SectionContent>
             </Section>
-          </View>
+          </ScrollView>
   );
 };
 

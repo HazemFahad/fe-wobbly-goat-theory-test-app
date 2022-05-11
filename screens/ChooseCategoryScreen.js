@@ -67,7 +67,7 @@ const ChooseCategoryScreen = () => {
         }}
       >
         <Image
-          source={require("/Users/hazemfahad/Desktop/northcoders/Group Project/theory-test/lastday/fe-wobbly-goat-theory-test-app/assets/splash.png")}
+          source={require("../assets/splash.png")}
           style={{
             alignItems: "center",
             justifyContent: "center",

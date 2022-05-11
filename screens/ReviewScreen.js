@@ -4,8 +4,9 @@ import {
   View,
   Image,
   ImageBackground,
+  SafeAreaView,ScrollView
 } from "react-native";
-import { Button, Text } from "react-native-rapi-ui";
+import { Button, Text ,useTheme} from "react-native-rapi-ui";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useContext } from "react";
@@ -17,7 +18,7 @@ const ReviewScreen = (props) => {
   const [count, setCount] = useState(0);
   const [correctAnswer, setCorrectAnswer] = useState(0);
   const [userAnswer, setUserAnswer] = useState(0);
-
+  const { isDarkmode } = useTheme();
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -32,7 +33,12 @@ const ReviewScreen = (props) => {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <SafeAreaView style={{ustifyContent: "center",
+    alignItems: "center",
+    flex: 1,backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,}}behavior="padding">
+            <View  style={{flex:1,}}>
+   
+      <ScrollView style={{marginTop:40,}}>
       {testData[count].media ? (
         <Image
           style={styles.questionImage}
@@ -44,66 +50,71 @@ const ReviewScreen = (props) => {
         <></>
       )}
 
-      <Text>{testData[count].question}</Text>
+      <Text style={{fontSize: 20,padding: 15,}}>{testData[count].question}</Text>
 
-      <View style={styles.answerContainer}>
+      <View style={{flexDirection: 'row',flexWrap: 'wrap',alignItems:"center",alignContent:"center",marginLeft:30,marginTop:30,}}>
         {testData[count].answers.map(
           ({ answer, answer_id, answer_number, answer_media }) => {
-            console.log(answer_number, "answer_number");
-            console.log(correctAnswer, "correct answer");
-            console.log(userAnswer, "user answer");
+            //console.log(answer_number, "answer_number");
+            //console.log(correctAnswer, "correct answer");
+            //console.log(userAnswer, "user answer");
 
             return (
               <View key={answer_id}>
                 {answer_media ? (
                   answer_number === correctAnswer ? (
-                    <ImageBackground
-                      style={{ height: 100, width: 100 }}
+                    <Image
+                    style={{
+                      height: 150,
+                      width: 150,
+                       resizeMode: "contain",
+                       margin:20,
+                       paddingTop: 10,
+                       borderColor:"#33A838",
+                       borderWidth:7,
+                      }}
                       source={{
                         uri: `https://theory.sajjel.info/assets/images/${answer_media}`,
                       }}
                     >
-                      <Text
-                        style={{
-                          backgroundColor: "rgba(124,252,0, 0.7)",
-                          lineHeight: 100,
-                          textAlign: "center",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        Correct
-                      </Text>
-                    </ImageBackground>
+
+                    </Image>
                   ) : answer_number !== correctAnswer &&
                     answer_number === userAnswer ? (
-                    <ImageBackground
-                      style={{ height: 100, width: 100 }}
+                    <Image
+                    style={{
+                      height: 150,
+                      width: 150,
+                       resizeMode: "contain",
+                       margin:20,
+                       paddingTop: 10,
+                       borderColor:"red",
+                       borderWidth:7,
+                      }}
                       source={{
                         uri: `https://theory.sajjel.info/assets/images/${answer_media}`,
                       }}
                     >
-                      <Text
-                        style={{
-                          backgroundColor: "rgba(200,0,0, 0.7)",
-                          lineHeight: 600,
-                          textAlign: "center",
-                        }}
-                      >
-                        .
-                      </Text>
-                    </ImageBackground>
+
+                    </Image>
                   ) : (
-                    <ImageBackground
-                      style={{ height: 100, width: 100 }}
+                    <Image
+                    style={{
+                      height: 150,
+                      width: 150,
+                       resizeMode: "contain",
+                       margin:20,
+                       paddingTop: 10, }}
                       source={{
                         uri: `https://theory.sajjel.info/assets/images/${answer_media}`,
                       }}
-                    ></ImageBackground>
+                    ></Image>
                   )
                 ) : answer_number === correctAnswer ? (
                   <>
                     <Button
                       text={answer}
+                      width={350}
                       status="success700"
                       style={{
                         marginTop: 10,
@@ -115,6 +126,7 @@ const ReviewScreen = (props) => {
                   <Button
                     text={answer}
                     status="danger700"
+                    width={350}
                     style={{
                       marginTop: 10,
                     }}
@@ -122,6 +134,7 @@ const ReviewScreen = (props) => {
                 ) : (
                   <Button
                     text={answer}
+                    width={350}
                     status="info700"
                     style={{
                       marginTop: 10,
@@ -133,23 +146,37 @@ const ReviewScreen = (props) => {
           }
         )}
       </View>
-      <View>
-        <Text>
-          Question Number: {count + 1} of {testData.length}
-        </Text>
-      </View>
+
+
+     
+      </ScrollView>
+
+ </View>
+<View>
+
+
       {count < testData.length - 1 ? (
-        <Button status="info700" text="Next" onPress={handlePress} />
+        <Button status="info700" width={350} text="Next" onPress={handlePress} />
       ) : (
         <Button
           text="Return Home"
           status="info700"
+          width={350}
           onPress={() => {
             navigation.navigate("Home");
           }}
         />
-      )}
-    </KeyboardAvoidingView>
+      )} 
+       <View>
+        <Text style={{ textAlign: "center", margin: 10 }}>
+          Question Number: {count + 1} of {testData.length}
+        </Text>
+      </View>
+</View>
+
+
+
+    </SafeAreaView>
   );
 };
 
@@ -169,7 +196,13 @@ const styles = StyleSheet.create({
   },
 
   questionImage: {
-    height: "50%",
-    width: "100%",
+    height: 230,
+    width:"100%",
+    resizeMode: "contain",
+    justifyContent: "center",
+    // flex: 2,
   },
+  answerContainer:{
+    alignItems:"center"
+  }
 });
