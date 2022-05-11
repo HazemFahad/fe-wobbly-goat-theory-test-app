@@ -1,20 +1,29 @@
 import {
-  Button,
-  Text,
   StyleSheet,
   KeyboardAvoidingView,
   TouchableOpacity,
+  ScrollView,
   View,
   Image,
   Alert,
 } from "react-native";
-import { RadioButton } from "react-native-rapi-ui";
-import React, { useEffect, useState } from "react";
+import {
+  Picker,
+  Layout,
+  Text,
+  Section,
+  Button,
+  SectionContent,
+  useTheme,
+  themeColor,
+} from "react-native-rapi-ui";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { sendAnswer, getResults } from "../utils/api";
 import { useContext } from "react";
 import { UserContext } from "../contexts/user";
 import { CountDown } from "react-native-countdown-component";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const QuestionScreen = (props) => {
   const { user } = useContext(UserContext);
@@ -31,13 +40,11 @@ const QuestionScreen = (props) => {
   const handleFinish = () => {
     Alert.alert("Your time has ran out");
     getResults(email, password, testData[count].test_id).then((data) => {
-      // console.log(data);
       navigation.navigate("Result", { data });
     });
   };
 
   const handlePress = () => {
-    console.log(count);
     if (answer !== "") {
       if (count < testData.length - 1) {
         setCount(count + 1);
@@ -52,10 +59,8 @@ const QuestionScreen = (props) => {
         password,
         answer
       ).then((data) => {
-        console.log(data.data, "datatime");
         if (data.data === 1) {
           setTotalResult(totalResult + 1);
-          console.log(totalResult, "resultytime");
         }
       });
       setAnswer("");
@@ -65,77 +70,120 @@ const QuestionScreen = (props) => {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <Layout>
+      {/* ******* COUNTDOWN TIMER ******* */}
       {testData.length === 50 ? (
-        <View style={{ padding: 50 }}>
+        <View style={{ paddingBottom: 10, marginBottom: 0 }}>
           <CountDown
             size={30}
             until={3420}
             onFinish={handleFinish}
-            showSeparator
             timeToShow={["M", "S"]}
             digitStyle={{
-              backgroundColor: "transparent",
-              borderWidth: 2,
+              backgroundColor: "#0887C9",
               borderColor: "transparent",
             }}
+            digitTxtStyle={{ color: "#fff" }}
+            timeLabels={{ m: null, s: null }}
+            style={styles.countDownTimer}
           />
         </View>
       ) : (
         <></>
       )}
-      {testData[count].media ? (
-        <Image
-          style={styles.questionImage}
-          source={{
-            uri: `https://theory.sajjel.info/assets/images/${testData[count].media}`,
-          }}
-        />
-      ) : (
-        <></>
-      )}
 
-      <Text>{testData[count].question}</Text>
+      {/* ******* IS THERE AN IMAGE ATTACHED TO QUESTION? ******* */}
+      <ScrollView>
+        <View style={styles.container} behavior="padding">
+          {testData[count].media ? (
+            <Image
+              style={styles.questionImage}
+              source={{
+                uri: `https://theory.sajjel.info/assets/images/${testData[count].media}`,
+              }}
+            />
+          ) : (
+            // <Image
+            //   source={require("../assets/icon.png")}
+            //   style={styles.questionImage}
+            // />
+            <></>
+          )}
 
-      <View style={styles.answerContainer}>
-        {testData[count].answers.map(
-          ({ answer, answer_id, answer_number, answer_media }) => {
-            return (
-              <View key={answer_id}>
-                <TouchableOpacity
-                  style={styles.answer}
-                  onPress={() => {
-                    setAnswer(answer_number);
-                  }}
-                >
-                  {answer_media ? (
-                    <Image
-                      style={{ height: 100, width: 200 }}
-                      source={{
-                        uri: `https://theory.sajjel.info/assets/images/${answer_media}`,
+          {/* ******* THE QUESTION ******* */}
+
+          <Text style={styles.questionText}>{testData[count].question}</Text>
+
+          {/* ******* ANSWER CONTAINER ******* */}
+
+          <View style={styles.answerContainer}>
+            {/* ******* ANSWER MAP ******* */}
+
+            {testData[count].answers.map(
+              ({ answer, answer_id, answer_number, answer_media }) => {
+                return (
+                  <View key={answer_id}>
+                    <TouchableOpacity
+                      style={styles.answer}
+                      onPress={() => {
+                        setAnswer(answer_number);
                       }}
-                    />
-                  ) : (
-                    <Text>{answer}</Text>
-                  )}
-                </TouchableOpacity>
-              </View>
-            );
-          }
-        )}
-      </View>
+                    >
+                      {answer_media ? (
+                        <Image
+                          style={{
+                            height: 200,
+                            width: 200,
+                            // resizeMode: "contain",
+                          }}
+                          source={{
+                            uri: `https://theory.sajjel.info/assets/images/${answer_media}`,
+                          }}
+                        />
+                      ) : (
+                        <Button
+                          style={styles.button}
+                          text={answer}
+                          onPress={() => {
+                            setAnswer(answer_number);
+                          }}
+                          status="info700"
+                          width={350}
+                        />
+                      )}
+                    </TouchableOpacity>
+                  </View>
+                );
+              }
+            )}
+          </View>
+        </View>
+      </ScrollView>
       <View>
-        <Text>
-          Question Number: {count + 1} of {testData.length}
-        </Text>
+        {count < 49 ? (
+          <Button
+            text="Next Question"
+            style={{ textAlign: "center", margin: 10 }}
+            onPress={handlePress}
+            status="info700"
+            width={350}
+          />
+        ) : (
+          <Button
+            width={350}
+            text="RESULTS"
+            onPress={handlePress}
+            status="info700"
+            style={{ textAlign: "center", margin: 10 }}
+          />
+        )}
+        <View>
+          <Text style={{ textAlign: "center", margin: 10 }}>
+            Question Number: {count + 1} of {testData.length}
+          </Text>
+        </View>
       </View>
-      {count < 49 ? (
-        <Button title="Next Question" onPress={handlePress} />
-      ) : (
-        <Button title="RESULTS" onPress={handlePress} />
-      )}
-      {/* <Button title="Next Question" onPress={onPress} /> */}
-    </KeyboardAvoidingView>
+    </Layout>
   );
 };
 
@@ -145,7 +193,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
-    flex: 1,
+    marginTop: 0,
   },
 
   input: {
@@ -156,6 +204,26 @@ const styles = StyleSheet.create({
 
   questionImage: {
     height: "50%",
-    width: "100%",
+    width: "80%",
+    resizeMode: "contain",
+    justifyContent: "center",
+    // flex: 2,
+  },
+
+  countDownTimer: {
+    marginTop: 0,
+  },
+
+  questionText: {
+    fontSize: 20,
+    padding: 15,
+  },
+
+  button: {
+    margin: 3,
+  },
+  nextButton: {
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

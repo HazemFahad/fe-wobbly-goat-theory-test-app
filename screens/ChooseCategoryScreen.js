@@ -5,6 +5,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   ActivityIndicator,
+  Image,
 } from "react-native";
 import {
   Button,
@@ -57,17 +58,25 @@ const ChooseCategoryScreen = () => {
 
   if (loading) {
     return (
-      <Layout>
-        <View
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#0887C9",
+        }}
+      >
+        <Image
+          source={require("/Users/hazemfahad/Desktop/northcoders/Group Project/theory-test/lastday/fe-wobbly-goat-theory-test-app/assets/splash.png")}
           style={{
-            flex: 1,
             alignItems: "center",
             justifyContent: "center",
+            height: 400,
+            width: 400,
           }}
-        >
-          <ActivityIndicator size="large" color={themeColor.primary} />
-        </View>
-      </Layout>
+        />
+        <ActivityIndicator size="large" color="#fff" />
+      </View>
     );
   }
 
