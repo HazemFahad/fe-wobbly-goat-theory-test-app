@@ -85,7 +85,7 @@ const TestsHistoryScreen = () => {
                 
               }}
             >
-              Choose your test type:
+              Choose your role:
             </Text>
 
 <Picker

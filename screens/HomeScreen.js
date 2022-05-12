@@ -32,10 +32,10 @@ const HomeScreen = () => {
   const screenWidth = Dimensions.get("window").width - 40;
 
   let chartData = {};
-  chartData.labels = stats.data.labels.reverse();
+  chartData.labels = stats.data.labels;
   chartData.datasets = [
     {
-      data: stats.data.datasets.data.reverse(),
+      data: stats.data.datasets.data,
       strokeWidth: 2,
     },
   ];
