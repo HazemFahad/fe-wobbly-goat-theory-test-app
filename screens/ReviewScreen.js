@@ -4,9 +4,10 @@ import {
   View,
   Image,
   ImageBackground,
-  SafeAreaView, ScrollView
+  SafeAreaView,
+  ScrollView,TouchableOpacity,
 } from "react-native";
-import { Button, Text, useTheme } from "react-native-rapi-ui";
+import { Button, Text, themeColor, useTheme } from "react-native-rapi-ui";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useContext } from "react";
@@ -33,14 +34,17 @@ const ReviewScreen = (props) => {
   };
 
   return (
-    <SafeAreaView style={{
-      ustifyContent: "center",
-      alignItems: "center",
-      flex: 1, backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,
-    }} behavior="padding">
-      <View style={{ flex: 1, }}>
-
-        <ScrollView style={{ marginTop: 40, }}>
+    <SafeAreaView
+      style={{
+        ustifyContent: "center",
+        alignItems: "center",
+        flex: 1,
+        backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,
+      }}
+      behavior="padding"
+    >
+      <View style={{ flex: 1 }}>
+        <ScrollView style={{ marginTop: 40 }}>
           {testData[count].media ? (
             <Image
               style={styles.questionImage}
@@ -52,111 +56,69 @@ const ReviewScreen = (props) => {
             <></>
           )}
 
-          <Text style={{ fontSize: 20, padding: 15, }}>{testData[count].question}</Text>
+          <Text style={{ fontSize: 20, padding: 15 }}>
+            {testData[count].question}
+          </Text>
 
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: "center", alignContent: "center", marginLeft: 30, marginTop: 30, }}>
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              alignItems: "center",
+              alignContent: "center",
+            }}
+          >
             {testData[count].answers.map(
               ({ answer, answer_id, answer_number, answer_media }) => {
-
                 return (
-                  <View key={answer_id}>
+                  <React.Fragment key={answer_id}>
                     {answer_media ? (
-                      answer_number === correctAnswer ? (
+                      <TouchableOpacity style={{ width: "50%", padding: 10 }}>
                         <Image
-                          style={{
-                            height: 150,
-                            width: 150,
-                            resizeMode: "contain",
-                            margin: 20,
-                            paddingTop: 10,
-                            borderColor: "#33A838",
-                            borderWidth: 7,
-                          }}
+                          style={
+                            answer_number === correctAnswer
+                              ? styles.answerImgCorrect
+                              : answer_number !== correctAnswer &&
+                                answer_number === userAnswer
+                              ? styles.answerImgIncorrect
+                              : styles.answerImg
+                          }
                           source={{
                             uri: `https://theory.sajjel.info/assets/images/${answer_media}`,
                           }}
-                        >
-
-                        </Image>
-                      ) : answer_number !== correctAnswer &&
-                        answer_number === userAnswer ? (
-                        <Image
-                          style={{
-                            height: 150,
-                            width: 150,
-                            resizeMode: "contain",
-                            margin: 20,
-                            paddingTop: 10,
-                            borderColor: "red",
-                            borderWidth: 7,
-                          }}
-                          source={{
-                            uri: `https://theory.sajjel.info/assets/images/${answer_media}`,
-                          }}
-                        >
-
-                        </Image>
-                      ) : (
-                        <Image
-                          style={{
-                            height: 150,
-                            width: 150,
-                            resizeMode: "contain",
-                            margin: 20,
-                            paddingTop: 10,
-                          }}
-                          source={{
-                            uri: `https://theory.sajjel.info/assets/images/${answer_media}`,
-                          }}
-                        ></Image>
-                      )
-                    ) : answer_number === correctAnswer ? (
-                      <>
-                        <Button
-                          text={answer}
-                          width={350}
-                          status="success700"
-                          style={{
-                            marginTop: 10,
-                          }}
+                          resizeMode="contain"
                         />
-                      </>
-                    ) : answer_number !== correctAnswer &&
-                      answer_number === userAnswer ? (
-                      <Button
-                        text={answer}
-                        status="danger700"
-                        width={350}
-                        style={{
-                          marginTop: 10,
-                        }}
-                      />
+                      </TouchableOpacity>
                     ) : (
                       <Button
                         text={answer}
                         width={350}
-                        status="info700"
-                        style={{
-                          marginTop: 10,
-                        }}
+                        status={
+                          answer_number === correctAnswer
+                            ? "success700"
+                            : answer_number !== correctAnswer &&
+                              answer_number === userAnswer
+                            ? "danger700"
+                            : "info700"
+                        }
+                        style={{ margin: 3, marginLeft: 'auto',marginRight: 'auto' }}
                       />
                     )}
-                  </View>
+                  </React.Fragment>
                 );
               }
             )}
           </View>
-
-
-
         </ScrollView>
-
       </View>
       <View>
-
-
         {count < testData.length - 1 ? (
-          <Button status="info700" width={350} text="Next" onPress={handlePress} />
+          <Button
+            status="info700"
+            width={350}
+            text="Next"
+            onPress={handlePress}
+          />
         ) : (
           <Button
             text="Return Home"
@@ -173,9 +135,6 @@ const ReviewScreen = (props) => {
           </Text>
         </View>
       </View>
-
-
-
     </SafeAreaView>
   );
 };
@@ -202,7 +161,26 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     // flex: 2,
   },
+  answerImg: {
+    height: undefined,
+    aspectRatio: 1,
+    width: "100%",
+  },
+  answerImgCorrect: {
+    height: undefined,
+    aspectRatio: 1,
+    width: "100%",
+    borderColor: "#33A838",
+    borderWidth: 7,
+  },
+  answerImgIncorrect: {
+    height: undefined,
+    aspectRatio: 1,
+    width: "100%",
+    borderColor: themeColor.danger,
+    borderWidth: 7,
+  },
   answerContainer: {
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 });

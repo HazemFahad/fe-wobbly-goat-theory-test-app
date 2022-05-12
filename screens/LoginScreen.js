@@ -34,6 +34,7 @@ const LoginScreen = () => {
         email,
         password
       );
+      setLoading(false);
       if (success) {
         try {
           data.password = password;
@@ -47,7 +48,7 @@ const LoginScreen = () => {
         }
         alert(mssg);
       }
-      setLoading(false);
+      
     } catch (error) {
       //let errorCode = error.code;
       let errorMessage = error.message;
@@ -124,6 +125,7 @@ const LoginScreen = () => {
             />
             <Button
               text={loading ? "Loading" : "Continue"}
+              status="info700"
               onPress={handleLogin}
               style={{
                 marginTop: 20,

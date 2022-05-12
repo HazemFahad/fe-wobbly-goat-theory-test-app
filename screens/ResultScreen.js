@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, ActivityIndicator, Text, StyleSheet } from "react-native";
+import { View, ActivityIndicator, Text, StyleSheet,SafeAreaView,ScrollView} from "react-native";
 import { Layout, themeColor, Button, Ionicons, useTheme } from "react-native-rapi-ui";
 import { getResults } from "../utils/api";
 import { useNavigation } from "@react-navigation/native";
@@ -24,8 +24,15 @@ const ResultScreen = (props) => {
   const result = totalCalculator.reduce((a, b) => a + b, 0);
 
   return (
-    <Layout style={{ backgroundColor: isDarkmode ? "#17171E" : themeColor.white100, }}>
-      <View style={styles.container}>
+    <SafeAreaView
+    style={{
+      flex: 1,
+      backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,
+    }}
+  >
+      
+      <ScrollView style={{  }}>
+      <View style={{ flex: 1, margin: 40}}>
         {result / totalCalculator.length >= 0.86 ? (
           <Text
             style={{
@@ -82,8 +89,11 @@ const ResultScreen = (props) => {
             navigation.navigate("Home");
           }}
         />
-      </View>
-    </Layout>
+        </View>
+        </ScrollView>
+      
+      
+    </SafeAreaView>
   );
 };
 
