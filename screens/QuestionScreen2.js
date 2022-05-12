@@ -13,11 +13,9 @@ import {
   Text,
   Section,
   Button,
-  SectionContent,
-  SectionImage,
+   SectionContent, SectionImage,
   useTheme,
-  themeColor,
-  RadioButton,
+  themeColor,RadioButton,
 } from "react-native-rapi-ui";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -29,95 +27,51 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const QuestionScreen = (props) => {
   const { user } = useContext(UserContext);
-  const [answer, setAnswer] = useState();
-  const [counter, setCounter] = useState(0);
-  const [selected, setSelected] = useState({
-    0: false,
-    1: false,
-    2: false,
-    3: false,
-  });
-  const [loading, setLoading] = useState(false);
-  const { isDarkmode } = useTheme();
+  const [answer, setAnswer] = useState("");
+  const [totalResult, setTotalResult] = useState(0);
+  const [checkBox, setCheckbox] = React.useState(false);
+  const [count, setCount] = useState(0);
   const navigation = useNavigation();
-
   const { email, password } = user;
+  const { isDarkmode } = useTheme();
+
   const testData = props.route.params.data.data;
   let testId = testData[0].test_id;
 
-  const [question, setQuestion] = useState(testData[0]);
-
   const handleFinish = () => {
     Alert.alert("Your time has ran out");
-    getResults(email, password, testId).then((data) => {
+    getResults(email, password, testData[count].test_id).then((data) => {
       navigation.navigate("Result", { data });
     });
   };
 
-  const toggleSelected = (id) => {
-    let sel = {};
-    setAnswer(id);
-    for (let i = 0; i < 4; i++) {
-      if (i === id) {
-        sel[i] = true;
-      } else {
-        sel[i] = false;
-      }
-    }
-    setSelected(sel);
-  };
-
-  const handlePress = async () => {
+  const handlePress = () => {
     if (answer !== "") {
-      setLoading(true);
-      if (counter < testData.length - 1) {
-        let count = counter + 1;
-        setCounter(count);
-        setAnswer("");
-        setSelected({ 0: false, 1: false, 2: false, 3: false });
-        setQuestion(testData[count]);
-        setLoading(false);
+      if (count < testData.length - 1) {
+        setCount(count + 1);
+      } else {
+        getResults(email, password, testData[count].test_id).then((data) => {
+          navigation.navigate("Result", { email, password, testId });
+        });
       }
-      try {
-        let { success, data } = await sendAnswer(
-          question.test_questions_id,
-          email,
-          password,
-          answer
-        );
-
-        if (success) {
-          if (counter >= testData.length - 1) {
-            getResults(email, password, testId).then((data) => {
-              setLoading(false);
-              navigation.navigate("Result", { email, password, testId });
-            });
-          }
-        } else {
-          let mssg = "";
-          for (const msg in data) {
-            mssg = data[msg];
-          }
-          alert(mssg);
+      sendAnswer(
+        testData[count].test_questions_id,
+        email,
+        password,
+        answer
+      ).then((data) => {
+        if (data.data === 1) {
+          setTotalResult(totalResult + 1);
         }
-      } catch (error) {
-        //let errorCode = error.code;
-        let errorMessage = error.message;
-        setLoading(false);
-        alert(errorMessage);
-      }
+      });
+      setAnswer("");
     } else {
       alert("You have to choose an option");
     }
   };
 
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,
-      }}
-    >
+    <SafeAreaView style={{ flex: 1, backgroundColor: isDarkmode ? "#17171E" : themeColor.white100, }}>
       {/* ******* COUNTDOWN TIMER ******* */}
       {testData.length === 50 ? (
         <View style={{ paddingBottom: 0, marginBottom: 0 }}>
@@ -140,14 +94,14 @@ const QuestionScreen = (props) => {
       )}
 
       {/* ******* IS THERE AN IMAGE ATTACHED TO QUESTION? ******* */}
-      <View style={{ flex: 1 }}>
-        <ScrollView style={{ marginTop: 40 }}>
+      <View style={{ flex: 1, }}>
+      <ScrollView style={{ marginTop: 40 }}>
           <View style={styles.container} behavior="padding">
-            {question.media ? (
+            {testData[count].media ? (
               <Image
                 style={styles.questionImage}
                 source={{
-                  uri: `https://theory.sajjel.info/assets/images/${question.media}`,
+                  uri: `https://theory.sajjel.info/assets/images/${testData[count].media}`,
                 }}
               />
             ) : (
@@ -160,9 +114,22 @@ const QuestionScreen = (props) => {
 
             {/* ******* THE QUESTION ******* */}
 
-            <Text style={styles.questionText}>{question.question}</Text>
+            <Text style={styles.questionText}>{testData[count].question}</Text>
 
             {/* ******* ANSWER CONTAINER ******* */}
+
+
+<Section style={{width:"90%"}}>
+    <SectionImage source={require('../assets/images/BB1576n1.gif')} />
+    <TouchableOpacity><SectionContent>
+        <Text>This is a Section with an image</Text>
+    </SectionContent></TouchableOpacity>
+    <SectionContent>
+        <Text>This is a Section with an image</Text>
+    </SectionContent>
+</Section>
+
+
 
             <View
               style={{
@@ -170,50 +137,47 @@ const QuestionScreen = (props) => {
                 flexWrap: "wrap",
                 alignItems: "center",
                 alignContent: "center",
-                textAlign: 'center',
               }}
             >
               {/* ******* ANSWER MAP ******* */}
 
-              {question.answers.map(
+              {testData[count].answers.map(
                 ({ answer, answer_id, answer_number, answer_media }) => {
                   return (
-                    <React.Fragment key={answer_id}>
+                    <>
                       {answer_media ? (
                         <TouchableOpacity
-                          style={{ width: "50%", padding: 10 ,textAlign: 'center',}}
-                          onPress={() => {
-                            toggleSelected(answer_number);
-                          }}
+                          key={answer_id}
+                          style={{ width: "50%", padding: 10 }}
                         >
                           <Image
-                            style={
-                              selected[answer_number] == true
-                                ? styles.answerImgSelected
-                                : styles.answerImg
-                            }
+                            style={{
+                              height: undefined,
+                              aspectRatio: 1,
+                              width: "100%",
+                            }}
                             source={{
                               uri: `https://theory.sajjel.info/assets/images/${answer_media}`,
                             }}
                             resizeMode="contain"
+                            onPress={() => {
+                              setAnswer(answer_number);
+                            }}
                           />
                         </TouchableOpacity>
                       ) : (
-                        <Button
-                          style={{ margin: 3, marginLeft: 'auto',marginRight: 'auto' }}
-                          text={answer}
-                          onPress={() => {
-                            toggleSelected(answer_number);
-                          }}
-                          status={
-                            selected[answer_number] == true
-                              ? "warning500"
-                              : "info700"
-                          }
-                          width={350}
-                        />
+                        <>
+   
+                        <View key={answer_id} style={{ flexDirection: 'row', alignItems: 'center',margin: 20, }}>
+            
+            <RadioButton value={checkBox} onValueChange={(val) => {setCheckbox(val);setAnswer(answer_number);}} />
+            <Text size="md" style={{ marginLeft: 10,  }}>
+            {answer}
+            </Text>
+        </View>
+        </>
                       )}
-                    </React.Fragment>
+                    </>
                   );
                 }
               )}
@@ -221,15 +185,14 @@ const QuestionScreen = (props) => {
           </View>
         </ScrollView>
       </View>
-      <View style={{ alignItems: "center" }}>
-        {counter < 49 ? (
+      <View style={{ alignItems: "center", }}>
+        {count < 49 ? (
           <Button
-            text={loading ? "Loading" : "Next Question"}
+            text="Next Question"
             style={{ textAlign: "center", margin: 10 }}
             onPress={handlePress}
             status="info800"
             width={350}
-            disabled={loading}
           />
         ) : (
           <Button
@@ -242,7 +205,7 @@ const QuestionScreen = (props) => {
         )}
         <View>
           <Text style={{ textAlign: "center", margin: 10 }}>
-            Question Number: {counter + 1} of {testData.length}
+            Question Number: {count + 1} of {testData.length}
           </Text>
         </View>
       </View>
@@ -256,7 +219,15 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
+
   },
+
+  input: {
+    fontSize: 22,
+    textAlign: "center",
+    padding: 10,
+  },
+
   questionImage: {
     height: 230,
     width: "100%",
@@ -264,23 +235,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     // flex: 2,
   },
-  answerImg: {
-    height: undefined,
-    aspectRatio: 1,
-    width: "100%",
-  },
-  answerImgSelected: {
-    height: undefined,
-    aspectRatio: 1,
-    width: "100%",
-    borderColor: themeColor.warning500,
-    borderWidth: 7,
-  },
+
   countDownTimer: {
     marginTop: 0,
   },
+
   questionText: {
     fontSize: 20,
     padding: 15,
+  },
+
+  button: {
+    margin: 3,
+  },
+  nextButton: {
+    justifyContent: "center",
+    alignItems: "center",
+
   },
 });
