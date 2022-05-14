@@ -1,6 +1,6 @@
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import React from "react";
-import StackNavigator from "./StackNavigator";
+import StackNavigator from "./components/StackNavigator";
 import { ThemeProvider } from "react-native-rapi-ui";
 import { NavigationContainer } from "@react-navigation/native";
 import { UserProvider } from "./contexts/user";

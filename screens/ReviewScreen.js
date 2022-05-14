@@ -1,21 +1,18 @@
-import {
-  StyleSheet,
-  KeyboardAvoidingView,
-  View,
-  Image,
-  ImageBackground,
-  SafeAreaView,
-  ScrollView,TouchableOpacity,
-} from "react-native";
-import { Button, Text, themeColor, useTheme } from "react-native-rapi-ui";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { useContext } from "react";
-import { UserContext } from "../contexts/user";
+import {
+  StyleSheet,
+  View,
+  Image,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import { Button, Text, themeColor, useTheme } from "react-native-rapi-ui";
+import { images } from "../assets/assets";
 
 const ReviewScreen = (props) => {
   const testData = props.route.params.resultsData;
-  const { user } = useContext(UserContext);
   const [count, setCount] = useState(0);
   const [correctAnswer, setCorrectAnswer] = useState(0);
   const [userAnswer, setUserAnswer] = useState(0);
@@ -48,9 +45,7 @@ const ReviewScreen = (props) => {
           {testData[count].media ? (
             <Image
               style={styles.questionImage}
-              source={{
-                uri: `https://theory.sajjel.info/assets/images/${testData[count].media}`,
-              }}
+              source={images[testData[count].media]}
             />
           ) : (
             <></>
@@ -83,9 +78,7 @@ const ReviewScreen = (props) => {
                               ? styles.answerImgIncorrect
                               : styles.answerImg
                           }
-                          source={{
-                            uri: `https://theory.sajjel.info/assets/images/${answer_media}`,
-                          }}
+                          source={images[answer_media]}
                           resizeMode="contain"
                         />
                       </TouchableOpacity>
@@ -101,7 +94,11 @@ const ReviewScreen = (props) => {
                             ? "danger700"
                             : "info700"
                         }
-                        style={{ margin: 3, marginLeft: 'auto',marginRight: 'auto' }}
+                        style={{
+                          margin: 3,
+                          marginLeft: "auto",
+                          marginRight: "auto",
+                        }}
                       />
                     )}
                   </React.Fragment>
@@ -142,18 +139,6 @@ const ReviewScreen = (props) => {
 export default ReviewScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-  },
-
-  input: {
-    fontSize: 22,
-    textAlign: "center",
-    padding: 10,
-  },
-
   questionImage: {
     height: 230,
     width: "100%",
@@ -179,8 +164,5 @@ const styles = StyleSheet.create({
     width: "100%",
     borderColor: themeColor.danger,
     borderWidth: 7,
-  },
-  answerContainer: {
-    alignItems: "center",
   },
 });

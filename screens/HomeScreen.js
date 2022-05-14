@@ -1,4 +1,4 @@
-import React, { useContext, useCallback, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LineChart } from "react-native-chart-kit";
 import {
@@ -6,11 +6,8 @@ import {
   StyleSheet,
   Dimensions,
   ScrollView,
-  ActivityIndicator,
-  KeyboardAvoidingView,
 } from "react-native";
 import {
-  Layout,
   Button,
   Text,
   Section,
@@ -54,8 +51,6 @@ const HomeScreen = () => {
       style={{
         flex: 1,
         flexGrow: 1,
-        // justifyContent: "center",
-        // alignItems: "center",
         backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,
       }}
     >

@@ -1,31 +1,19 @@
+import React, { useState, useContext } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { CountDown } from "react-native-countdown-component";
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   StyleSheet,
-  KeyboardAvoidingView,
   TouchableOpacity,
   ScrollView,
   View,
   Image,
   Alert,
 } from "react-native";
-import {
-  Picker,
-  Layout,
-  Text,
-  Section,
-  Button,
-  SectionContent,
-  SectionImage,
-  useTheme,
-  themeColor,
-  RadioButton,
-} from "react-native-rapi-ui";
-import React, { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
-import { sendAnswer, getResults } from "../utils/api";
-import { useContext } from "react";
+import { Text, Button, useTheme, themeColor } from "react-native-rapi-ui";
+import { sendAnswer } from "../utils/api";
 import { UserContext } from "../contexts/user";
-import { CountDown } from "react-native-countdown-component";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { images } from "../assets/assets";
 
 const QuestionScreen = (props) => {
   const { user } = useContext(UserContext);
@@ -49,9 +37,7 @@ const QuestionScreen = (props) => {
 
   const handleFinish = () => {
     Alert.alert("Your time has ran out");
-    getResults(email, password, testId).then((data) => {
-      navigation.navigate("Result", { data });
-    });
+    navigation.navigate("Result", { testId: testId });
   };
 
   const toggleSelected = (id) => {
@@ -88,10 +74,8 @@ const QuestionScreen = (props) => {
 
         if (success) {
           if (counter >= testData.length - 1) {
-            getResults(email, password, testId).then((data) => {
-              setLoading(false);
-              navigation.navigate("Result", { email, password, testId });
-            });
+            setLoading(false);
+            navigation.navigate("Result", { testId: testId });
           }
         } else {
           let mssg = "";
@@ -146,9 +130,7 @@ const QuestionScreen = (props) => {
             {question.media ? (
               <Image
                 style={styles.questionImage}
-                source={{
-                  uri: `https://theory.sajjel.info/assets/images/${question.media}`,
-                }}
+                source={images[question.media]}
               />
             ) : (
               // <Image
@@ -170,7 +152,7 @@ const QuestionScreen = (props) => {
                 flexWrap: "wrap",
                 alignItems: "center",
                 alignContent: "center",
-                textAlign: 'center',
+                textAlign: "center",
               }}
             >
               {/* ******* ANSWER MAP ******* */}
@@ -181,7 +163,11 @@ const QuestionScreen = (props) => {
                     <React.Fragment key={answer_id}>
                       {answer_media ? (
                         <TouchableOpacity
-                          style={{ width: "50%", padding: 10 ,textAlign: 'center',}}
+                          style={{
+                            width: "50%",
+                            padding: 10,
+                            textAlign: "center",
+                          }}
                           onPress={() => {
                             toggleSelected(answer_number);
                           }}
@@ -192,15 +178,17 @@ const QuestionScreen = (props) => {
                                 ? styles.answerImgSelected
                                 : styles.answerImg
                             }
-                            source={{
-                              uri: `https://theory.sajjel.info/assets/images/${answer_media}`,
-                            }}
+                            source={images[answer_media]}
                             resizeMode="contain"
                           />
                         </TouchableOpacity>
                       ) : (
                         <Button
-                          style={{ margin: 3, marginLeft: 'auto',marginRight: 'auto' }}
+                          style={{
+                            margin: 3,
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                          }}
                           text={answer}
                           onPress={() => {
                             toggleSelected(answer_number);

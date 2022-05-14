@@ -65,7 +65,14 @@ const TestScreen = () => {
   }
 
   return (
-    <KeyboardAvoidingView behavior="height" enabled style={{ flex: 1, backgroundColor: isDarkmode ? "#17171E" : themeColor.white100, }}>
+    <KeyboardAvoidingView
+      behavior="height"
+      enabled
+      style={{
+        flex: 1,
+        backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,
+      }}
+    >
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
@@ -76,7 +83,6 @@ const TestScreen = () => {
             flex: 1,
             justifyContent: "center",
             alignItems: "center",
-
           }}
         >
           <Image
@@ -87,13 +93,19 @@ const TestScreen = () => {
               height: 200,
               width: 200,
               marginBottom: 30,
-            }}></Image>
-          <Text fontWeight="bold" style={{ textAlign: "center", fontSize: 22, marginBottom: 20, }}>Choose the type of test</Text>
+            }}
+          ></Image>
+          <Text
+            fontWeight="bold"
+            style={{ textAlign: "center", fontSize: 22, marginBottom: 20 }}
+          >
+            Choose the type of test
+          </Text>
           <Button
             status="info700"
             style={styles.button}
             text="Practice Quiz (10 Questions)"
-            onPress={() => navigation.navigate("PracticeSelector")}
+            onPress={() => navigation.navigate("ChooseCategoryScreen")}
             width={350}
           />
 
@@ -114,9 +126,7 @@ const TestScreen = () => {
           onPress={() => navigation.navigate("Home")}
           width={350}
         />
-
       </View>
-
     </KeyboardAvoidingView>
   );
 };
@@ -124,18 +134,6 @@ const TestScreen = () => {
 export default TestScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-  },
-
-  input: {
-    fontSize: 22,
-    textAlign: "center",
-    padding: 10,
-  },
-
   button: {
     margin: 10,
     width: "70%",
