@@ -15,10 +15,7 @@ const useStats = (email, password) => {
     data: {
       labels: ["05", "04", "03", "02", "01", "12"],
       datasets: {
-        data: [0, 7, 5, 0, 12, 6],
-        // color: "rgba(134, 65, 244, 1)",
-        // strokeWidth: 2,
-        // legend: ["Test Progress"],
+        data: [0, 0, 0, 0, 0, 0]
       },
     },
   };

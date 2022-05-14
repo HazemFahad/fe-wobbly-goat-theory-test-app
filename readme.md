@@ -1,9 +1,9 @@
 # Let's go,  Driving theory test mobile application
 
 #### This is an android and iOS application created for the UK driving test / theory test.
-#### Project started on : 28/08/2022
+#### Project started on : 28/04/2022
 
-This project was created as a team project, the purpose of this appliaction is to simulate the UK theory test and give end users the best chance at passing the test on their first try.
+This project was created as a team project, the purpose of this application is to simulate the UK theory test and give end users the best chance at passing the test on their first try.
 
 
 This project built in React Native and Expo and used APIs from the backend project [be-wobbly-goat-theory-test-app](https://github.com/squarezy/be-wobbly-goat-theory-test-app) which was built in Laravel 8. 

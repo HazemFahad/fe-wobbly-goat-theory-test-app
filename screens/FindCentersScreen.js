@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
-import {
-  ScrollView,
-  TouchableOpacity,
-  View,
-  KeyboardAvoidingView,
-  Image,
-} from "react-native";
+import { ScrollView, View, KeyboardAvoidingView, Image } from "react-native";
 import {
   Layout,
   Text,
@@ -92,34 +85,37 @@ const FindCentersScreen = () => {
               padding: 20,
             }}
           >
-
-
-
-
             {centers.map((center) => {
-              return <View
-                style={{
-                  marginTop: 10,
-                }}
-                key={center.postcode}
-              >
-                <Text size="h3" fontWeight="bold">
-                  {center.title}
-                </Text>
-                <Text><Text fontWeight="bold">Street address:</Text> {center.street_address}</Text>
-                <Text><Text fontWeight="bold">locality:</Text> {center.locality}</Text>
-                <Text><Text fontWeight="bold">Postcode:</Text> {center.postcode}</Text>
+              return (
                 <View
                   style={{
-                    borderBottomColor: 'black',
-                    borderBottomWidth: 1,
                     marginTop: 10,
                   }}
-                />
-              </View>
-            })
-
-            }
+                  key={center.postcode}
+                >
+                  <Text size="h3" fontWeight="bold">
+                    {center.title}
+                  </Text>
+                  <Text>
+                    <Text fontWeight="bold">Street address:</Text>{" "}
+                    {center.street_address}
+                  </Text>
+                  <Text>
+                    <Text fontWeight="bold">locality:</Text> {center.locality}
+                  </Text>
+                  <Text>
+                    <Text fontWeight="bold">Postcode:</Text> {center.postcode}
+                  </Text>
+                  <View
+                    style={{
+                      borderBottomColor: "black",
+                      borderBottomWidth: 1,
+                      marginTop: 10,
+                    }}
+                  />
+                </View>
+              );
+            })}
           </View>
         </ScrollView>
       </Layout>

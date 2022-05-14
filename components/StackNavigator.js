@@ -1,21 +1,20 @@
 import React, { useContext } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import TestScreen from "./screens/TestScreen"; //TestOrQuizScreen TestSelector
-import LoginScreen from "./screens/LoginScreen";
-import RegisterScreen from "./screens/RegisterScreen";
-import LoadingScreen from "./screens/LoadingScreen";
-import ForgetPasswordScreen from "./screens/ForgetPasswordScreen";
-import QuestionScreen from "./screens/QuestionScreen";
-import ResultScreen from "./screens/ResultScreen";
-import ChangePasswordScreen from "./screens/ChangePasswordScreen";
-import TestsHistoryScreen from "./screens/TestsHistoryScreen";
-import FindCentersScreen from "./screens/FindCentersScreen";
-import DrawerNavigator from "./components/DrawerNavigator";
-import { UserContext } from "./contexts/user";
-import PracticeSelector from "./screens/ChooseCategoryScreen";
-import PrePracticeSelector from "./screens/StartCategoryQuizScreen";
-import ReviewScreen from "./screens/ReviewScreen";
+import TestScreen from "../screens/TestScreen"; //TestOrQuizScreen TestSelector
+import LoginScreen from "../screens/LoginScreen";
+import RegisterScreen from "../screens/RegisterScreen";
+import LoadingScreen from "../screens/LoadingScreen";
+import ForgetPasswordScreen from "../screens/ForgetPasswordScreen";
+import QuestionScreen from "../screens/QuestionScreen";
+import ResultScreen from "../screens/ResultScreen";
+import ChangePasswordScreen from "../screens/ChangePasswordScreen";
+import TestsHistoryScreen from "../screens/TestsHistoryScreen";
+import FindCentersScreen from "../screens/FindCentersScreen";
+import ChooseCategoryScreen from "../screens/ChooseCategoryScreen";
+import ReviewScreen from "../screens/ReviewScreen";
 // import QuestionPage from "./screens/QuestionPageScreen";
+import DrawerNavigator from "./DrawerNavigator";
+import { UserContext } from "../contexts/user";
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => {
   const { user } = useContext(UserContext);
@@ -37,11 +36,7 @@ const StackNavigator = () => {
             component={ChangePasswordScreen}
           />
           <Stack.Screen name="Test" component={TestScreen} />
-          <Stack.Screen name="PracticeSelector" component={PracticeSelector} />
-          <Stack.Screen
-            name="PrePracticeSelector"
-            component={PrePracticeSelector}
-          />
+          <Stack.Screen name="ChooseCategoryScreen" component={ChooseCategoryScreen} />
           <Stack.Screen name="Review" component={ReviewScreen} />
           <Stack.Screen name="find" component={FindCentersScreen} />
           {/* <Stack.Screen name="QueestionPage" component={QuestionPage} /> */}

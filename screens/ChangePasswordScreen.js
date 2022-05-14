@@ -1,13 +1,6 @@
 import React, { useState, useContext } from "react";
-import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  ScrollView,
-  TouchableOpacity,
-  View,
-  KeyboardAvoidingView,
-  Image,
-} from "react-native";
+import { ScrollView, View, KeyboardAvoidingView, Image } from "react-native";
 import {
   Layout,
   Text,
@@ -21,7 +14,6 @@ import { UserContext } from "../contexts/user";
 
 const ForgetPasswordScreen = () => {
   const { user, setUser } = useContext(UserContext);
-  const navigation = useNavigation();
   const [passwordNew, setPasswordNew] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [loading, setLoading] = useState(false);
@@ -135,9 +127,6 @@ const ForgetPasswordScreen = () => {
               }}
               disabled={loading}
             />
-
-
-
           </View>
         </ScrollView>
       </Layout>

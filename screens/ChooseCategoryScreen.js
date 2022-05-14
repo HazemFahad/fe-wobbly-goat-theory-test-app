@@ -1,15 +1,16 @@
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { getCategories } from "../utils/api";
+import { UserContext } from "../contexts/user";
+import MultiSelect from "react-native-multiple-select";
 import {
   View,
-  StyleSheet,
-  Dimensions,
-  ScrollView,
   KeyboardAvoidingView,
   ActivityIndicator,
   Image,
 } from "react-native";
 import {
   Button,
-  Picker,
   Layout,
   Text,
   Section,
@@ -17,11 +18,6 @@ import {
   useTheme,
   themeColor,
 } from "react-native-rapi-ui";
-import React, { useState, useEffect, useContext } from "react";
-import { useNavigation } from "@react-navigation/native";
-import { getCategories } from "../utils/api";
-import { UserContext } from "../contexts/user";
-import MultiSelect from "react-native-multiple-select";
 import { getNewTest } from "../utils/api";
 
 const ChooseCategoryScreen = () => {
@@ -43,8 +39,7 @@ const ChooseCategoryScreen = () => {
       .then((data) => {
         setCategories(data);
       })
-      .catch((err) => {
-      });
+      .catch((err) => {});
   }, []);
 
   const handlePressPracticeCat = () => {
@@ -90,13 +85,22 @@ const ChooseCategoryScreen = () => {
             backgroundColor: isDarkmode ? "#17171E" : themeColor.white100,
           }}
         >
-          <Section style={styles.selectorContainer}>
+          <Section
+            style={{
+              width: "90%",
+              height: "80%",
+            }}
+          >
             <Text fontWeight="bold" style={{ textAlign: "center" }}>
               Please choose the categories, or select nothing to get question
               from all categories.
             </Text>
             <SectionContent>
-              <View style={styles.selector}>
+              <View
+                style={{
+                  width: "100%",
+                }}
+              >
                 <MultiSelect
                   hideTags
                   items={categories}
@@ -120,7 +124,11 @@ const ChooseCategoryScreen = () => {
               </View>
 
               <Button
-                style={styles.input}
+                style={{
+                  fontSize: 22,
+                  textAlign: "center",
+                  padding: 10,
+                }}
                 text="Start Quiz!"
                 onPress={handlePressPracticeCat}
                 status="info700"
@@ -134,26 +142,3 @@ const ChooseCategoryScreen = () => {
 };
 
 export default ChooseCategoryScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-  },
-
-  input: {
-    fontSize: 22,
-    textAlign: "center",
-    padding: 10,
-  },
-
-  selector: {
-    width: "100%",
-  },
-
-  selectorContainer: {
-    width: "90%",
-    height: "80%",
-  },
-});
