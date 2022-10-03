@@ -109,23 +109,22 @@ const ReviewScreen = (props) => {
         </ScrollView>
       </View>
       <View>
-        {count < testData.length - 1 ? (
+        <View style={{ marginBottom: 6 }}>
           <Button
             status="info700"
             width={350}
             text="Next"
             onPress={handlePress}
           />
-        ) : (
-          <Button
-            text="Return Home"
-            status="info700"
-            width={350}
-            onPress={() => {
-              navigation.navigate("Home");
-            }}
-          />
-        )}
+        </View>
+        <Button
+          text="Return Home"
+          status="info700"
+          width={350}
+          onPress={() => {
+            navigation.navigate("Home");
+          }}
+        />
         <View>
           <Text style={{ textAlign: "center", margin: 10 }}>
             Question Number: {count + 1} of {testData.length}

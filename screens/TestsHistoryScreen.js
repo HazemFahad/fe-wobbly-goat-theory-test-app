@@ -1,5 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, StyleSheet, ScrollView, ActivityIndicator,TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  ActivityIndicator,
+  TouchableOpacity,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import {
   Picker,
@@ -49,7 +55,6 @@ const TestsHistoryScreen = () => {
       .catch((err) => {});
   }, [email, password]);
 
-
   if (isLoading === true) {
     return (
       <Layout>
@@ -82,13 +87,13 @@ const TestsHistoryScreen = () => {
               marginTop: 10,
             }}
           >
-            Choose your role:
+            Choose your test type:
           </Text>
 
           <Picker
             items={items}
             value={pickerValue}
-            placeholder="Choose your role"
+            placeholder="Choose your test type"
             onValueChange={(val) => setPickerValue(val)}
           />
         </View>
@@ -110,8 +115,8 @@ const TestsHistoryScreen = () => {
                     <TouchableOpacity
                       key={test.test_id}
                       style={test.correct >= 43 ? styles.pass : styles.fail}
-                      onPress={()=>{
-                        navigation.navigate("Result", {testId:test.test_id });
+                      onPress={() => {
+                        navigation.navigate("Result", { testId: test.test_id });
                       }}
                     >
                       <Text style={styles.txt}>
@@ -138,8 +143,8 @@ const TestsHistoryScreen = () => {
                     <TouchableOpacity
                       key={test.test_id}
                       style={test.correct >= 9 ? styles.pass : styles.fail}
-                      onPress={()=>{
-                        navigation.navigate("Result", {testId:test.test_id });
+                      onPress={() => {
+                        navigation.navigate("Result", { testId: test.test_id });
                       }}
                     >
                       <Text style={styles.txt}>
